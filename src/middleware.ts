@@ -4,6 +4,7 @@ import { decrypt } from "@/lib/session"
 
 const protecedRoutes = ['/profile']
 const publicRoutes = ['/signup', 'login', '/', '/about']
+const adminRoutes = ['/dashboard']
 const onlyPublicRoutes = ['/signup', '/login']
 
 export default async function middleware(req: NextRequest) {
@@ -13,9 +14,11 @@ export default async function middleware(req: NextRequest) {
     const isProtected = protecedRoutes.includes(path)
     const isPublic = publicRoutes.includes(path) // unused as of now
     const isOnlyPublic = onlyPublicRoutes.includes(path);
+    const isAdminPage = adminRoutes.includes(path)
 
     const cookie = (await cookies()).get('session')?.value
     const session = await decrypt(cookie);
+
 
     if (session?.userId && isOnlyPublic) { // don't allow to login again
         return NextResponse.redirect(new URL('/profile', req.nextUrl))
@@ -23,6 +26,10 @@ export default async function middleware(req: NextRequest) {
 
     if (isProtected && !session?.userId) {
         return NextResponse.redirect(new URL('/login', req.nextUrl))
+    }
+
+    if (isAdminPage && !session?.isAdmin) {
+        return NextResponse.redirect(new URL('/', req.nextUrl))
     }
 
     return NextResponse.next()

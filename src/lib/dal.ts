@@ -3,7 +3,7 @@ import 'server-only'
 import { cookies } from 'next/headers'
 import { cache } from 'react'
 import { decrypt } from './session'
-import { redirect } from 'next/navigation'
+// import { redirect } from 'next/navigation'
 import prisma from './prisma'
 
 export const verifySession = cache(async () => {
@@ -13,7 +13,7 @@ export const verifySession = cache(async () => {
 
     if (!session?.userId) {
         console.log('[LOG] could not verify user session')
-        redirect('/login')
+        return null; // redirect causes infinite
     }
 
     return { isAuth: true, userId: session?.userId }

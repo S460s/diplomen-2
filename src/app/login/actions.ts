@@ -50,8 +50,9 @@ export async function login(state: FormState, formData: FormData) {
     const user = await prisma.user.findUnique({
         where: {
             email
-        }
+        },
     })
+
 
     if (!user) {
         return {
@@ -74,6 +75,6 @@ export async function login(state: FormState, formData: FormData) {
     }
 
 
-    await createSession(user.id.toString());
+    await createSession(user.id.toString(), user.isAdmin);
     redirect('/profile')
 }

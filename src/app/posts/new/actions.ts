@@ -22,7 +22,6 @@ export async function createPost(state: any, formData: FormData) {
 
     await sleep(2000);
 
-    console.log(validatedFields)
 
     if (!validatedFields.success) {
         return {
