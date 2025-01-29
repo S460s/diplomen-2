@@ -19,6 +19,9 @@ const signUpSchema = z.object({
         .trim(),
 })
 
+
+
+
 export type FormState =
     | {
         errors?: {
@@ -33,15 +36,19 @@ export type FormState =
 
 
 export async function signUp(state: FormState, formData: FormData) {
-    const validatedInput = signUpSchema.safeParse({
-        name: formData.get('name'),
-        email: formData.get('email'),
-        password: formData.get('password')
-    })
+
+    const inputData = {
+        name: formData.get('name') as string,
+        email: formData.get('email') as string,
+        password: formData.get('password') as string
+    }
+
+    const validatedInput = signUpSchema.safeParse(inputData)
 
     if (!validatedInput.success) {
         return {
             errors: validatedInput.error.flatten().fieldErrors,
+            inputData
         }
     }
 
@@ -56,7 +63,8 @@ export async function signUp(state: FormState, formData: FormData) {
         return {
             errors: {
                 email: ["There is an account with this email"]
-            }
+            },
+            inputData
         }
     }
 

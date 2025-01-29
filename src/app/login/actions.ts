@@ -31,14 +31,18 @@ export type FormState =
 
 
 export async function login(state: FormState, formData: FormData) {
-    const validatedInput = loginSchema.safeParse({
-        email: formData.get('email'),
-        password: formData.get('password')
-    })
+
+    const inputData = {
+        email: formData.get('email') as string,
+        password: formData.get('password') as string
+    }
+
+    const validatedInput = loginSchema.safeParse(inputData)
 
     if (!validatedInput.success) {
         return {
             errors: validatedInput.error.flatten().fieldErrors,
+            inputData
         }
     }
 
@@ -53,7 +57,8 @@ export async function login(state: FormState, formData: FormData) {
         return {
             errors: {
                 email: ["No such account"] // return it as a general error (message ?)
-            }
+            },
+            inputData
         }
     }
 
@@ -63,7 +68,8 @@ export async function login(state: FormState, formData: FormData) {
             errors: {
                 email: ['Wrong credentials'],
                 password: ['Wrong credentials']
-            }
+            },
+            inputData
         }
     }
 
