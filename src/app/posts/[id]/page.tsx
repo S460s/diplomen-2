@@ -9,7 +9,6 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 
     const post = await prisma.post.findUnique({ where: { id: numId }, include: { author: true } });
 
-    console.log(post);
 
     if (!post) {
         notFound();

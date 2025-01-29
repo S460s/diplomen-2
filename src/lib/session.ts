@@ -6,6 +6,7 @@ import { cookies } from 'next/headers'
 type SessionPayload = {
     expires: Date
     userId: string
+    isAdmin: boolean
 }
 
 const secretKey = process.env.SESSION_SECRET
@@ -26,9 +27,9 @@ export async function decrypt(session: string | undefined = '') {
     }
 }
 
-export async function createSession(userId: string) {
+export async function createSession(userId: string, isAdmin = false) {
     const expires = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000)
-    const session = await encrypt({ userId, expires })
+    const session = await encrypt({ userId, expires, isAdmin })
     const cookieStore = await cookies()
 
     cookieStore.set('session', session, {

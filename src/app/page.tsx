@@ -3,7 +3,6 @@ import Link from "next/link";
 
 export default async function Home() {
   const users = await prisma.user.findMany()
-  console.log(users)
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center -mt-16">
