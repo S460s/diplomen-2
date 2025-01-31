@@ -19,6 +19,32 @@ export const verifySession = cache(async () => {
     return { isAuth: true, userId: session?.userId }
 })
 
+export const isAdminUser = (cache(async () => {
+    const session = await verifySession()
+    if (!session) {
+        console.log('[LOG] no session')
+        return null
+    }
+
+    try {
+        const user = await prisma.user.findUnique({
+            where: {
+                id: parseInt(session.userId as string)
+            },
+            omit: {
+                password: true,
+                name: true,
+                email: true
+            }
+        })
+
+        return user?.isAdmin || null
+    } catch (err) {
+        console.log('[ERROR] failed to get user')
+        return null
+    }
+}))
+
 export const getUser = (cache(async () => {
     const session = await verifySession()
     if (!session) {

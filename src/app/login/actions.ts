@@ -31,7 +31,6 @@ export type FormState =
 
 
 export async function login(state: FormState, formData: FormData) {
-
     const inputData = {
         email: formData.get('email') as string,
         password: formData.get('password') as string

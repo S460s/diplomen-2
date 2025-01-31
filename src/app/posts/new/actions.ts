@@ -6,6 +6,7 @@ import { z } from 'zod'
 
 import prisma from "@/lib/prisma";
 import { sleep } from "@/util";
+import { getUser } from "@/lib/dal";
 
 
 const postSchema = z.object({
@@ -14,7 +15,6 @@ const postSchema = z.object({
 })
 
 export async function createPost(state: any, formData: FormData) {
-
     const validatedFields = postSchema.safeParse({
         title: formData.get("title"),
         content: formData.get('content')
@@ -22,6 +22,11 @@ export async function createPost(state: any, formData: FormData) {
 
     await sleep(2000);
 
+    const currentUser = await getUser();
+    if (!currentUser) {
+        console.log('[ERROR] Cannot create post without user')
+        redirect('/')
+    }
 
     if (!validatedFields.success) {
         return {
@@ -32,7 +37,7 @@ export async function createPost(state: any, formData: FormData) {
     const { title, content } = validatedFields.data;
     await prisma.post.create({
         data: {
-            title, content, authorId: 1
+            title, content, authorId: currentUser.id
         }
     })
 
