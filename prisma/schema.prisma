@@ -19,6 +19,7 @@ model User {
   password String
   name  String?
   posts Post[]
+  theme String @default("dark")
   isAdmin Boolean @default(false)
 }
 

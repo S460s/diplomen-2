@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from "react";
+import { themeAction } from "@/actions/theme";
 
 export default function Page() {
 
@@ -12,30 +13,36 @@ export default function Page() {
     }, [])
 
     console.log(toggle)
+
+    const handleThemeChange = async (e: any) => {
+        e.preventDefault()
+        await themeAction(e.target.dataset.setTheme)
+    }
+
     return (
         <div className="dropdown relative inline-flex rtl:[--placement:bottom-end]">
             <button id="dropdown-default" type="button" className="dropdown-toggle btn btn-primary" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
                 Theme
                 <span className="icon-[tabler--chevron-down] dropdown-open:rotate-180 size-4"></span>
             </button>
-            <ul className="dropdown-menu dropdown-open:opacity-100 hidden min-w-60" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-default">
+            <form className="dropdown-menu dropdown-open:opacity-100 hidden min-w-60" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-default">
 
-                <span data-set-theme="" className="dropdown-item" >Default</span>
-                <span data-set-theme="dark" className="dropdown-item">
+                <span onClick={handleThemeChange} data-set-theme="" className="dropdown-item" >Default</span>
+                <span onClick={handleThemeChange} data-set-theme="dark" className="dropdown-item">
                     Dark
                 </span>
-                <span data-set-theme="corporate" className="dropdown-item">
+                <span onClick={handleThemeChange} data-set-theme="corporate" className="dropdown-item">
                     Corporate
                 </span>
-                <span data-set-theme="gourmet" className="dropdown-item">
+                <span onClick={handleThemeChange} data-set-theme="gourmet" className="dropdown-item">
                     Gourmet
                 </span >
-                <span data-set-theme="luxury" className="dropdown-item">
+                <span onClick={handleThemeChange} data-set-theme="luxury" className="dropdown-item">
                     Luxury
                 </span>
-                <span data-set-theme="soft" className=" dropdown-item">Soft</span>
+                <span onClick={handleThemeChange} data-set-theme="soft" className=" dropdown-item">Soft</span>
 
-            </ul>
+            </form>
         </div>
     )
 }
