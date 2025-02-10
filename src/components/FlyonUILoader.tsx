@@ -16,7 +16,6 @@ export default function FlyonuiScript() {
 
     useEffect(() => {
         themeChange(false)
-        console.log('LOAD THEME')
     }, [])
 
     useEffect(() => {

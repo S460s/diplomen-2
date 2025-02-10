@@ -17,7 +17,7 @@ export function NavBar({ isAdmin, isAuthed }: { isAdmin: boolean, isAuthed: bool
                     </div>
                 </div>
                 <div id="default-navbar-collapse" className="md:navbar-end collapse hidden grow basis-full overflow-hidden transition-[height] duration-300 max-md:w-full" >
-                    <ul className="menu md:menu-horizontal gap-2 p-0 text-base max-md:mt-2">
+                    <ul className="menu md:menu-horizontal gap-2 p-0 text-base max-md:mt-2 justify-center items-center">
 
                         {isAuthed ?
                             <>

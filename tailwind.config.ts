@@ -9,9 +9,7 @@ export default {
   ],
 
   flyonui: {
-
-    themes: ['light', 'dark'],
-
+    themes: ['light', 'dark', 'gourmet', 'corporate', 'luxury', 'soft'],
   },
 
   plugins: [
