@@ -1,4 +1,5 @@
 'use client';
+import { themeChange } from 'theme-change'
 
 import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
@@ -12,6 +13,11 @@ declare global {
 
 export default function FlyonuiScript() {
     const path = usePathname();
+
+    useEffect(() => {
+        themeChange(false)
+        console.log('LOAD THEME')
+    }, [])
 
     useEffect(() => {
         const loadFlyonui = async () => {

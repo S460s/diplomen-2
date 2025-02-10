@@ -5,6 +5,7 @@ import "./globals.css";
 import Footer from '@/components/Footer'
 import { NavBar } from "@/components/NavBar";
 import { getUser } from "@/lib/dal";
+import FlyonuiScript from "@/components/FlyonUILoader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,10 +31,12 @@ export default async function RootLayout({
   const currentUser = await getUser(); // only for cosmetics, do checks when dealing with data
 
   return (
-    <html lang="en" data-theme="gourmet">
+    <html lang="en" data-theme='corporate'>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <FlyonuiScript />
+
         <div className="flex flex-col h-screen">
           <NavBar isAdmin={!!currentUser?.isAdmin} isAuthed={!!currentUser} />
           <div className="flex-grow">

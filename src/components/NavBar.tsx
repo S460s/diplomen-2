@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import ThemeSwitch from './ThemeSwitch'
 
 export function NavBar({ isAdmin, isAuthed }: { isAdmin: boolean, isAuthed: boolean }) {
     return (
@@ -35,6 +36,10 @@ export function NavBar({ isAdmin, isAuthed }: { isAdmin: boolean, isAuthed: bool
                             </>
 
                         }
+
+                        <li>
+                            <ThemeSwitch />
+                        </li>
                     </ul>
                 </div>
             </div>
