@@ -7,14 +7,11 @@ export default {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     './node_modules/flyonui/dist/js/*.js',
   ],
-  theme: {
-    extend: {
-      colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-      },
-    },
+
+  flyonui: {
+    themes: ["corporate"]
   },
+
   plugins: [
     require('flyonui'),
     require('flyonui/plugin')
