@@ -1,8 +1,9 @@
-import { useOptimistic } from "react";
-import { likeMap } from "../actions";
+import { useTransition, useOptimistic, useState } from "react";
+import { likeMap, unlikeMap } from "../actions";
 
 export function Like({ data, mapId }: { data: { likes: number, liked: boolean }, mapId: number }) {
 
+    const [likes, setLikes] = useState(data.likes)
     const [optimisticLike, setOptimisticLike] = useOptimistic<
         {
             liked: boolean;
@@ -10,20 +11,29 @@ export function Like({ data, mapId }: { data: { likes: number, liked: boolean },
         },
         number
     >(data, (state, newLike) => {
-        return { likes: state.likes + newLike, liked: !state.liked };
+        return { likes: state.likes + newLike, liked: newLike > 0 };
     });
 
-    const like = async () => {
-        setOptimisticLike(1);
+
+    const [isPending, startTransition] = useTransition();
+
+    const like = () => {
+        startTransition(async () => {
+            setOptimisticLike(1);
+            await likeMap(mapId)
+        })
     };
 
-    const dislike = async () => {
-        setOptimisticLike(-1);
+    const dislike = () => {
+        startTransition(async () => {
+            setOptimisticLike(-1);
+            await unlikeMap(mapId)
+        })
     };
 
     console.log(data, mapId)
 
     return optimisticLike.liked ?
-        <button className="btn">Dislike</button> :
-        <button className="btn">Like</button>
+        <button onClick={dislike} className="btn">Dislike</button> :
+        <button onClick={like} className="btn">Like</button>
 }

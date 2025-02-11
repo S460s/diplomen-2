@@ -17,3 +17,16 @@ export async function likeMap(mapId: number) {
     }
 
 }
+
+export async function unlikeMap(mapId: number) {
+    const user = await getUser();
+    if (!user) return;
+
+    try {
+        const like = await prisma.mapLike.deleteMany({ where: { mapId } })
+        console.log('Like deleted: ', like);
+    } catch (err) {
+        console.log('[ERROR] couldnt create map like')
+    }
+
+}

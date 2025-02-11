@@ -24,7 +24,7 @@ export default function MapList({ maps }: { maps: Prisma.MapGetPayload<{}>[] }) 
                             <div className="card-actions">
                                 <button className="btn">View</button>
 
-                                <Like data={{ liked: !!(map as any).MapLike, likes: (map as any)._count.MapLike }} mapId={map.id} />
+                                <Like data={{ liked: !!(map as any).MapLike.length, likes: (map as any)._count.MapLike }} mapId={map.id} />
                             </div>
                         </div>
                     </div>
