@@ -5,6 +5,7 @@ import { formatter } from '@/util';
 import MapList from './components/MapList';
 import { getUser } from '@/lib/dal';
 import { redirect } from 'next/navigation';
+import { Search } from './components/Search';
 
 export default async function Page() {
     const user = await getUser();
@@ -24,12 +25,13 @@ export default async function Page() {
         orderBy: { updatedAt: 'asc' }
     });
 
-    console.log(maps)
+    console.log('LOADING MAPS PLEASE SEEE ME')
 
     return (
         <div className='flex justify-center items-center'>
             <div>
                 <h1 className='text-base-content text-3xl font-semibold'>Maps</h1>
+                <Search />
                 <MapList maps={maps} user={user} />
             </div>
         </div>
