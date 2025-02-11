@@ -1,18 +1,7 @@
-'use client';
+import { useOptimistic } from "react";
+import { likeMap } from "../actions";
 
-import { dislikeMap, likeMap } from '../actions';
-import { useOptimistic } from 'react';
-
-export function Like({
-    likes = 0,
-    mapId,
-    liked,
-}: {
-    likes: number;
-    mapId: number;
-    liked: boolean;
-}) {
-    const data = { likes, liked };
+export function Like({ data, mapId }: { data: { likes: number, liked: boolean }, mapId: number }) {
 
     const [optimisticLike, setOptimisticLike] = useOptimistic<
         {
@@ -25,28 +14,16 @@ export function Like({
     });
 
     const like = async () => {
-        const boundLike = likeMap.bind(null, mapId);
         setOptimisticLike(1);
-        await boundLike();
     };
 
     const dislike = async () => {
-        const boundDislike = dislikeMap.bind(null, mapId);
         setOptimisticLike(-1);
-        await boundDislike();
     };
 
-    return (
-        <form className="flex justify-start content-center gap-1">
-            {optimisticLike.liked ? (
-                <button formAction={dislike} className="btn">
-                    Like {optimisticLike.likes}
-                </button>
-            ) : (
-                <button formAction={like} className="btn">
-                    Liked {optimisticLike.likes}
-                </button>
-            )}
-        </form>
-    );
+    console.log(data, mapId)
+
+    return optimisticLike.liked ?
+        <button className="btn">Dislike</button> :
+        <button className="btn">Like</button>
 }

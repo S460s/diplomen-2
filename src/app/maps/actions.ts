@@ -1,49 +1,19 @@
-import { getUser } from "@/lib/dal";
+'use server'
+
+import { getUser } from "@/lib/dal"
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
-
-export async function likeMap(
-    mapId: number // bound using bind
-) {
-    console.log(mapId);
-
+export async function likeMap(mapId: number) {
     const user = await getUser();
-    if (!user) {
-        redirect('/login')
-    }
-
+    if (!user) return;
 
     try {
-        const like = await prisma.mapLike.create({ data: { ownerId: user?.id, mapId } });
-        console.log(`CREATE LIKE: with id ${like.id}`);
-    } catch (e) {
-        console.error(e);
-        return { message: 'Could not delete map.' };
+        const like = await prisma.mapLike.create({ data: { mapId, ownerId: user.id } })
+        console.log('Like: ', like);
+
+    } catch (err) {
+        console.log('[ERROR] couldnt create map like')
     }
 
-    revalidatePath('/maps');
-
-}
-
-export async function dislikeMap(
-    mapId: number // bound using bind
-) {
-
-    const user = await getUser();
-    if (!user) {
-        redirect('/login')
-    }
-
-    try {
-        const like = await prisma.mapLike.deleteMany({ where: { mapId, ownerId: user.id } });
-        console.log(like);
-        console.log(`DELETED ${like.count} likes.`);
-    } catch (e) {
-        console.error(e);
-        return { message: 'Could not delete map.' };
-    }
-
-    revalidatePath('/maps');
 }
