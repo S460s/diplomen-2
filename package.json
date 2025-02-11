@@ -29,6 +29,8 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@iconify/json": "^2.2.305",
+    "@iconify/tailwind": "^1.2.0",
     "@types/bcrypt": "^5.0.2",
     "@types/node": "^20",
     "@types/react": "^19",

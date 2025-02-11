@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+const { addDynamicIconSelectors } = require("@iconify/tailwind")
 
 export default {
   content: [
@@ -14,6 +15,7 @@ export default {
 
   plugins: [
     require('flyonui'),
-    require('flyonui/plugin')
+    require('flyonui/plugin'),
+    addDynamicIconSelectors()
   ],
 } satisfies Config;
