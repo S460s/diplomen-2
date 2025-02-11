@@ -16,8 +16,8 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 
     return (
         <div>
-            <h1 className="text-4xl font-bold mb-8 text-[#333333]">{post.title}</h1>
-            <p className="text-gray-600 text-center">by {post.author.name}</p>
+            <h1 className="">{post.title}</h1>
+            <p className="">by {post.author.name}</p>
             <div className="prose prose-gray mt-8">
                 {post.content || "No content available."}
             </div>

@@ -1,14 +1,15 @@
 'use server'
 import { getUser } from '@/lib/dal'
 import prisma from '@/lib/prisma'
-import { z } from 'zod'
-
-const loginSchema = z.object({
-    theme: z.string().email({ message: "Please enter a valid email" }).trim(),
-
-})
 
 export async function themeAction(theme: string) {
+    const allowedThemes = ['light', 'dark', 'gourmet', 'corporate', 'luxury', 'soft'];
+    theme = theme.trim();
+
+    if (!allowedThemes.includes(theme)) {
+        console.log('[LOG] Invalid theme setting.')
+        return;
+    }
     const user = await getUser();
 
     if (!user) return; // no user
