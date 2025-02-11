@@ -19,6 +19,7 @@ export default async function Page() {
                                 <p className="mb-4">{map.description}</p>
                                 <div className="card-actions">
                                     <button className="btn btn-primary">Learn More</button>
+                                    <button className="btn btn-primary">Likes: 1</button>
                                 </div>
                             </div>
                         </div>
