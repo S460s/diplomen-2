@@ -54,7 +54,7 @@ export const getUser = (cache(async () => {
 
 
     try {
-        const user = prisma.user.findUnique({
+        const user = await prisma.user.findUnique({
             where: {
                 id: parseInt(session.userId as string)
             },
