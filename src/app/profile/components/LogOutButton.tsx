@@ -9,5 +9,5 @@ export function LogOutButton() {
         redirect('/signup')
     }
 
-    return <button onClick={handleLogOut}>Log out</button>
+    return <button className="btn btn-error" onClick={handleLogOut}>Log out</button>
 }

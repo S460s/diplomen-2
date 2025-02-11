@@ -20,8 +20,6 @@ const signUpSchema = z.object({
 })
 
 
-
-
 export type FormState =
     | {
         errors?: {

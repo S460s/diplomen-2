@@ -23,6 +23,8 @@ export function NavBar({ isAdmin, isAuthed }: { isAdmin: boolean, isAuthed: bool
                             <>
                                 <li><Link href="/posts">Posts</Link></li>
                                 <li><Link href="/profile">Profile</Link></li>
+                                <li><Link href='/maps'>Maps</Link></li>
+
                                 {isAdmin && (
                                     <li>
                                         <Link href="/dashboard">Dashboard</Link>

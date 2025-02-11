@@ -7,3 +7,8 @@ export async function logOut() {
     await deleteSession()
     redirect('/signup')
 }
+
+
+export async function updateInformation(){
+    
+}
