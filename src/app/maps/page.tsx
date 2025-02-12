@@ -6,12 +6,19 @@ import MapList from './components/MapList';
 import { getUser } from '@/lib/dal';
 import { redirect } from 'next/navigation';
 import { Search } from './components/Search';
+import { title } from 'process';
 
-export default async function Page() {
+export default async function Page({ searchParams }: { searchParams?: Promise<{ query: string, category: string }> }) {
     const user = await getUser();
     if (!user) {
         redirect('/login')
     }
+
+    const params = await searchParams;
+    const query = params?.query || '';
+    const category = params?.category || ''
+
+    let where = category === 'my' ? { ownerId: user.id, title: { contains: query } } : { title: { contains: query } };
 
     const maps = await prisma.map.findMany({
         include: {
@@ -22,17 +29,19 @@ export default async function Page() {
                 where: { ownerId: user?.id },
             }
         },
+        where,
         orderBy: { updatedAt: 'asc' }
     });
 
-    console.log('LOADING MAPS PLEASE SEEE ME')
 
     return (
-        <div className='flex justify-center items-center'>
-            <div>
-                <h1 className='text-base-content text-3xl font-semibold'>Maps</h1>
+        <div className='flex justify-center items-center gap-4'>
+            <div className='w-[100%] flex justify-center flex-col items-center'>
+                <h1 className='text-base-content text-3xl font-semibold m-4'>Maps</h1>
                 <Search />
-                <MapList maps={maps} user={user} />
+                <div>
+                    <MapList maps={maps} user={user} />
+                </div>
             </div>
         </div>
     )
