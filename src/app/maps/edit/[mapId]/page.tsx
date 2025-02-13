@@ -5,7 +5,8 @@ import { EditForm } from './components/EditForm';
 
 
 export default async function Page({ params }: { params: { mapId: string } }) {
-    const id = Number(params.mapId);
+    const p = await params;
+    const id = Number(p.mapId);
     console.log(id)
     if (!id) notFound();
 

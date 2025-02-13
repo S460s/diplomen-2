@@ -28,7 +28,7 @@ export async function editMap(id: number, state: FormState, formData: FormData) 
     const inputData = {
         title: formData.get('title') as string,
         description: formData.get('description') as string,
-        published: formData.get('published')
+        published: formData.get('published') || ''
     }
 
 

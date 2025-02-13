@@ -3,6 +3,7 @@ import { useActionState } from "react";
 import { editMap } from "../actions";
 import { Prisma } from "@prisma/client";
 import clsx from "clsx";
+import Link from "next/link";
 
 
 export function EditForm({ map }: { map: Prisma.MapGetPayload<{}> }) {
@@ -46,12 +47,13 @@ export function EditForm({ map }: { map: Prisma.MapGetPayload<{}> }) {
                             </div>
 
                             <div className="flex items-center gap-3">
-                                <input defaultChecked={map.published} type="checkbox" id="published" name="published" className="switch switch-primary" required />
+                                <input defaultChecked={map.published} type="checkbox" id="published" name="published" className="switch switch-primary" />
                                 <label className="label text-base" htmlFor="published">Publish Map</label>
                             </div>
 
-                            <div className="mt-4">
+                            <div className="mt-4 flex gap-2">
                                 <button type="submit" name="submitButton" className="btn btn-primary" disabled={pending}>Update</button>
+                                <Link href={`/maps/edit/${map.id}/editor`} className="btn">Editor</Link>
                             </div>
                         </form>
                     </div>
