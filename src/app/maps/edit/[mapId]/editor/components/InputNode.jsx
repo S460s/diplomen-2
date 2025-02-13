@@ -9,9 +9,6 @@ const InputNode = ({ data, isConnectable }) => {
     const lower = label === 'input node' || label === 'default node';
     const params = useParams();
 
-    console.log('DATA');
-    console.log(data);
-    console.log(params);
     return (
         <div className="flex gap-1">
             {upper && (

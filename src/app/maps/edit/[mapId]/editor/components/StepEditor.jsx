@@ -247,11 +247,12 @@ const Editor = ({ mapId, steps }) => {
                         {menu && <ContextMenu onClick={onPaneClick} {...menu} />}
 
                         <Panel position="top-right" className="flex gap-2">
-                            <button onClick={onSave}>Save</button>
-                            <button onClick={onRestore}>Restore</button>
-                            <button onClick={onLayout}>Order</button>
+                            <button className='btn' onClick={onSave}>Save</button>
+                            <button className='btn' onClick={onRestore}>Restore</button>
+                            <button className='btn' onClick={onLayout}>Order</button>
                             <form action="">
                                 <button
+                                    className='btn'
                                     formAction={async () => {
                                         if (rfInstance) {
                                             const flow = rfInstance.toObject();
@@ -265,7 +266,6 @@ const Editor = ({ mapId, steps }) => {
                                                 currentNode.data.value = input.value;
                                             });
 
-                                            console.log(flow);
 
                                             // const boundAction = saveSteps.bind(null, flow, mapId);
                                             // await boundAction();
@@ -279,18 +279,21 @@ const Editor = ({ mapId, steps }) => {
 
                         <Panel position="top-left" className="flex gap-2">
                             <button
+                                className='btn'
                                 onDragStart={(event) => onDragStart(event, 'input')}
                                 draggable
                             >
                                 Start Node
                             </button>
                             <button
+                                className='btn'
                                 onDragStart={(event) => onDragStart(event, 'default')}
                                 draggable
                             >
                                 Middle Node
                             </button>
                             <button
+                                className='btn'
                                 onDragStart={(event) => onDragStart(event, 'output')}
                                 draggable
                             >
