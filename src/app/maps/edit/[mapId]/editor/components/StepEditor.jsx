@@ -65,7 +65,7 @@ const initialNodes = [
     {
         id: initialId,
         type: 'inputType',
-        data: { label: 'input node', id: initialId, value: 'SPGE ne stava' },
+        data: { label: 'input node', id: initialId, value: '' },
         position: { x: 0, y: 0 },
     },
 ];

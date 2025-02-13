@@ -24,18 +24,26 @@ const InputNode = ({ data, isConnectable }) => {
                 />
             )}
 
-            <input
-                type="text"
-                onChange={data.onChange}
-                placeholder="SPGE ne stava"
-                id={`input_${id}`}
-                data-step-input
-                defaultValue={data.value}
-            />
+            <div className="input-group max-w-sm">
+                <span className="input-group-text"></span>
+                <input
+                    className='input'
+                    type="text"
+                    onChange={data.onChange}
+                    placeholder="Title"
+                    id={`input_${id}`}
+                    data-step-input
+                    defaultValue={data.value}
+                />
+                <label className="sr-only" htmlFor={`input_${id}`}>Enter title</label>
+                <span className='input-group-text'>
+                    <Link href={`/learning-maps/edit/${params.id}/steps/${id}`}>
+                        edit
+                    </Link>
+                </span>
+            </div>
 
-            <Link href={`/learning-maps/edit/${params.id}/steps/${id}`}>
-                edit
-            </Link>
+
 
             {lower && (
                 <Handle
