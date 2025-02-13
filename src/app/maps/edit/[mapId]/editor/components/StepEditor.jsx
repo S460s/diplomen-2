@@ -79,7 +79,7 @@ const nodeTypes = {
 
 import ContextMenu from './ContextMenu';
 
-const Editor = ({ mapId, steps }) => {
+const Editor = ({ mapId, steps, theme }) => {
     const flowkey = `steps${mapId}`;
     const reactFlowWrapper = useRef(null);
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
@@ -236,6 +236,7 @@ const Editor = ({ mapId, steps }) => {
                         onDrop={onDrop}
                         onDragOver={onDragOver}
                         onInit={setRfInstance}
+                        colorMode={theme}
                         onNodeContextMenu={onNodeContextMenu}
                         fitView
                         nodeTypes={nodeTypes}
@@ -307,11 +308,11 @@ const Editor = ({ mapId, steps }) => {
     );
 };
 
-export default function StepEditor({ mapId, steps }) {
+export default function StepEditor({ mapId, steps, theme }) {
     console.log(steps);
     return (
         <ReactFlowProvider>
-            <Editor mapId={mapId} steps={steps} />
+            <Editor mapId={mapId} steps={steps} theme={theme} />
         </ReactFlowProvider>
     );
 }

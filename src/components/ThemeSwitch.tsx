@@ -4,15 +4,12 @@ import { useEffect, useState } from "react";
 import { themeAction } from "@/actions/theme";
 
 export default function Page() {
-
-
     const [toggle, setToggle] = useState(false);
 
     useEffect(() => {
         if (typeof localStorage !== 'undefined') setToggle(!!(localStorage.getItem('theme')))
     }, [])
 
-    console.log(toggle)
 
     const handleThemeChange = async (e: any) => {
         e.preventDefault()

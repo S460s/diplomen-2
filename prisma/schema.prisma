@@ -14,16 +14,16 @@ datasource db {
 }
 
 model User {
-  id       Int       @id @default(autoincrement())
-  email    String    @unique
+  id       Int     @id @default(autoincrement())
+  email    String  @unique
   password String
   name     String?
   posts    Post[]
-  theme    String    @default("dark")
-  isAdmin  Boolean   @default(false)
-  
-  Map      Map[]
-  MapLike  MapLike[]
+  theme    String  @default("dark")
+  isAdmin  Boolean @default(false)
+
+  Map     Map[]
+  MapLike MapLike[]
 }
 
 model Post {
@@ -45,7 +45,8 @@ model Map {
   MapLike     MapLike[]
 
   ownerId Int
-  owner   User @relation(fields: [ownerId], references: [id])
+  owner   User     @relation(fields: [ownerId], references: [id])
+  MapData MapData?
 }
 
 model MapLike {
@@ -55,4 +56,12 @@ model MapLike {
   owner   User @relation(fields: [ownerId], references: [id])
   mapId   Int
   map     Map  @relation(fields: [mapId], references: [id])
+}
+
+model MapData {
+  id      Int  @id @default(autoincrement())
+  data Json
+
+  map     Map?      @relation(fields: [mapId], references: [id])
+  mapId   Int       @unique
 }
