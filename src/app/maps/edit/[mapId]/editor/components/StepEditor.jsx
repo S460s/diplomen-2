@@ -88,7 +88,7 @@ import ContextMenu from './ContextMenu';
 import { notyfContext } from '../../components/Notyf'
 import { ThemeContext } from '@/components/ThemeContext';
 
-const Editor = ({ mapId, steps, theme }) => {
+const Editor = ({ mapId, steps }) => {
     let notyf = null
     try {
         // notyf = new Notyf({ duration: 1000 })
@@ -103,7 +103,7 @@ const Editor = ({ mapId, steps, theme }) => {
     const reactFlowWrapper = useRef(null);
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-    const { screenToFlowPosition } = useReactFlow();
+    const { screenToFlowPosition, fitView } = useReactFlow();
     console.log(mapId);
 
     const onConnect = useCallback(
@@ -150,7 +150,7 @@ const Editor = ({ mapId, steps, theme }) => {
     const contextTheme = useContext(ThemeContext)
     console.log('THEME: ', contextTheme)
 
-    const onSave = useCallback(() => {
+    const onCacheSave = useCallback(() => {
         if (rfInstance) {
             const flow = rfInstance.toObject();
             const inputs = document.querySelectorAll('[data-step-input]'); // get the inputs as they are not controlled
@@ -180,6 +180,8 @@ const Editor = ({ mapId, steps, theme }) => {
             }
         };
         restoreFlow();
+        fitView() // add duration if you can figure out how to go from the correct position
+
     }, [setNodes, setViewport]);
 
     useEffect(() => {
@@ -270,7 +272,7 @@ const Editor = ({ mapId, steps, theme }) => {
                         {menu && <ContextMenu onClick={onPaneClick} {...menu} />}
 
                         <Panel position="top-right" className="flex gap-2">
-                            <button className='btn' onClick={onSave}>Save</button>
+                            <button className='btn' onClick={onCacheSave}>Cache</button>
                             <button className='btn' onClick={onRestore}>Restore</button>
                             <button className='btn' onClick={onLayout}>Order</button>
                             <form action="">
@@ -330,11 +332,11 @@ const Editor = ({ mapId, steps, theme }) => {
     );
 };
 
-export default function StepEditor({ mapId, steps, theme }) {
+export default function StepEditor({ mapId, steps }) {
     console.log(steps);
     return (
         <ReactFlowProvider>
-            <Editor mapId={mapId} steps={steps} theme={theme} />
+            <Editor mapId={mapId} steps={steps} />
         </ReactFlowProvider>
     );
 }

@@ -14,8 +14,8 @@ export default function ContextMenu({
     const { getNode, setNodes, addNodes, setEdges } = useReactFlow();
 
     // this is because there is a navbar at the top of the page which pushes the whole graph 40px down
-    if (top) top -= 40;
-    if (bottom) bottom += 40;
+    if (top) top -= 58;
+    if (bottom) bottom += 58;
 
     const duplicateNode = useCallback(() => {
         const node = getNode(id);
@@ -40,24 +40,27 @@ export default function ContextMenu({
     return (
         <div
             style={{ top, left, right, bottom }}
-            className="context-menu absolute bg-white border shadow-lg z-10"
+            className="context-menu absolute border z-10 bg-primary"
             {...props}
         >
             <p className="m-2 text-center">
                 <small>node: {id}</small>
             </p>
-            <button
-                onClick={duplicateNode}
-                className="block w-full px-4 py-2 text-left hover:bg-gray-100"
-            >
-                duplicate
-            </button>
-            <button
-                onClick={deleteNode}
-                className="block w-full px-4 py-2 text-left hover:bg-gray-100"
-            >
-                delete
-            </button>
+            <div className='flex flex-col'>
+
+                <button
+                    onClick={duplicateNode}
+                    className="btn m-2"
+                >
+                    duplicate
+                </button>
+                <button
+                    onClick={deleteNode}
+                    className="btn m-2"
+                >
+                    delete
+                </button>
+            </div>
         </div>
     );
 }

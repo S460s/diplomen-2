@@ -17,13 +17,12 @@ const InputNode = ({ data, isConnectable }) => {
                 <Handle
                     type="target"
                     position={Position.Top}
-                    style={{ background: '#555' }}
                     onConnect={(params) => console.log('handle onConnect', params)}
                     isConnectable={isConnectable}
                 />
             )}
 
-            <div className="input-group max-w-sm">
+            <div className="input-group w-48">
                 <span className="input-group-text"></span>
                 <input
                     className='input'
@@ -49,7 +48,6 @@ const InputNode = ({ data, isConnectable }) => {
                     type="source"
                     position={Position.Bottom}
                     id="a"
-                    style={{ background: '#555' }}
                     isConnectable={isConnectable}
                 />
             )}
