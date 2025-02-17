@@ -1,5 +1,5 @@
 'use client';
-import React, { useRef, useCallback, useState, useEffect } from 'react';
+import React, { useRef, useCallback, useState, useEffect, useContext } from 'react';
 import {
     ReactFlow,
     ReactFlowProvider,
@@ -15,6 +15,7 @@ import {
     ConnectionLineType,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
+
 import { nanoid } from 'nanoid';
 
 import { saveMapData } from '../actions';
@@ -78,8 +79,14 @@ const nodeTypes = {
 };
 
 import ContextMenu from './ContextMenu';
+import { notyfContext } from '../../Notyf';
 
 const Editor = ({ mapId, steps, theme }) => {
+
+    const notyf = useContext(notyfContext)
+    console.log(notyf)
+
+
     const flowkey = `steps${mapId}`;
     const reactFlowWrapper = useRef(null);
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
@@ -266,6 +273,7 @@ const Editor = ({ mapId, steps, theme }) => {
                                                 currentNode.data.value = input.value;
                                             });
 
+                                            notyf.success('Map successfully saved')
                                             await saveMapData(flow, mapId)
                                         }
                                     }}
