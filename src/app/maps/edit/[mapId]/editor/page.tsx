@@ -6,16 +6,16 @@ import { getUser } from "@/lib/dal";
 export default async function StepPage({ params }: { params: { mapId: string } }) {
   const p = await params;
   const user = await getUser();
-  console.log(user?.theme)
 
   let theme = 'system'
   if (['dark', 'luxury'].includes(user?.theme || '')) theme = 'dark'
   if (['corporate', 'gourmet', 'soft'].includes(user?.theme || '')) theme = 'light'
 
-  /* const steps = await prisma.mapSteps.findFirst({
-    where: { mapId: Number(params.id) },
+  const steps = await prisma.mapData.findFirst({
+    where: { mapId: +(p.mapId) },
   });
-  */
 
-  return <StepEditor mapId={p.mapId} steps={null} theme={theme} />;
+  console.log(steps)
+
+  return <StepEditor mapId={p.mapId} steps={steps} theme={theme} />;
 }

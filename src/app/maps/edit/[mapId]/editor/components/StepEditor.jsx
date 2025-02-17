@@ -17,7 +17,7 @@ import {
 import '@xyflow/react/dist/style.css';
 import { nanoid } from 'nanoid';
 
-// import { saveSteps } from '@/lib/actions';
+import { saveMapData } from '../actions';
 
 // dagre stuff (positioning) https://reactflow.dev/examples/layout/dagre
 import dagre from '@dagrejs/dagre';
@@ -111,7 +111,6 @@ const Editor = ({ mapId, steps, theme }) => {
             event.preventDefault();
 
             const pane = menuRef.current.getBoundingClientRect();
-            console.log(pane);
             setMenu({
                 id: node.id,
                 top: event.clientY < pane.height - 200 && event.clientY,
@@ -129,8 +128,6 @@ const Editor = ({ mapId, steps, theme }) => {
     const [rfInstance, setRfInstance] = useState(null);
     const { setViewport } = useReactFlow();
 
-    // actions and db saving
-    // const [saveErrors, saveAction] = useFormState(saveSteps, null);
     const onSave = useCallback(() => {
         if (rfInstance) {
             const flow = rfInstance.toObject();
@@ -143,7 +140,6 @@ const Editor = ({ mapId, steps, theme }) => {
                 currentNode.data.value = input.value;
             });
 
-            console.log(flow);
             localStorage.setItem(flowkey, JSON.stringify(flow));
         }
     }, [rfInstance]);
@@ -163,11 +159,13 @@ const Editor = ({ mapId, steps, theme }) => {
     }, [setNodes, setViewport]);
 
     useEffect(() => {
-        if (steps) {
-            setNodes(steps.mapData.nodes);
-            setEdges(steps.mapData.edges);
-            setViewport(steps.mapData.viewport);
+        if (steps?.data) {
+            // load data from database
+            setNodes(steps.data.nodes);
+            setEdges(steps.data.edges);
+            setViewport(steps.data.viewport);
         } else {
+            // load steps from local storage
             onRestore();
         }
     }, []);
@@ -261,15 +259,14 @@ const Editor = ({ mapId, steps, theme }) => {
                                                 document.querySelectorAll('[data-step-input]'); // get the inputs as they are not controlled
 
                                             // TODO: care about good code and performance
+                                            console.log('[DEBUG] saving map data')
                                             inputs.forEach((input) => {
                                                 const id = input.id.slice(6);
                                                 const currentNode = flow.nodes.find((n) => n.id === id);
                                                 currentNode.data.value = input.value;
                                             });
 
-
-                                            // const boundAction = saveSteps.bind(null, flow, mapId);
-                                            // await boundAction();
+                                            await saveMapData(flow, mapId)
                                         }
                                     }}
                                 >
