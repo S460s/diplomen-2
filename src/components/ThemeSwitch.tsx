@@ -1,10 +1,12 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { themeAction } from "@/actions/theme";
+import { ThemeContext } from "./ThemeContext";
 
 export default function Page() {
     const [toggle, setToggle] = useState(false);
+    const theme = useContext(ThemeContext)
 
     useEffect(() => {
         if (typeof localStorage !== 'undefined') setToggle(!!(localStorage.getItem('theme')))
@@ -13,6 +15,7 @@ export default function Page() {
 
     const handleThemeChange = async (e: any) => {
         e.preventDefault()
+        theme?.setTheme(e.target.dataset.setTheme)
         await themeAction(e.target.dataset.setTheme)
     }
 

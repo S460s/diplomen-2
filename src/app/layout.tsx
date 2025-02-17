@@ -6,6 +6,7 @@ import Footer from '@/components/Footer'
 import { NavBar } from "@/components/NavBar";
 import { getUser } from "@/lib/dal";
 import FlyonuiScript from "@/components/FlyonUILoader";
+import { ThemeContext, ThemeProvider } from "@/components/ThemeContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,13 +38,15 @@ export default async function RootLayout({
       >
         <FlyonuiScript />
 
-        <div className="flex flex-col h-screen">
-          <NavBar isAdmin={!!currentUser?.isAdmin} isAuthed={!!currentUser} />
-          <div className="flex-grow">
-            {children}
+        <ThemeProvider defaultTheme={currentUser?.theme || ''}>
+          <div className="flex flex-col h-screen">
+            <NavBar isAdmin={!!currentUser?.isAdmin} isAuthed={!!currentUser} />
+            <div className="flex-grow">
+              {children}
+            </div>
+            <Footer />
           </div>
-          <Footer />
-        </div>
+        </ThemeProvider>
       </body>
     </html>
   );

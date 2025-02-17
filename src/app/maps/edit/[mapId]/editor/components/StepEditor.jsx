@@ -86,6 +86,7 @@ const nodeTypes = {
 
 import ContextMenu from './ContextMenu';
 import { notyfContext } from '../../components/Notyf'
+import { ThemeContext } from '@/components/ThemeContext';
 
 const Editor = ({ mapId, steps, theme }) => {
     let notyf = null
@@ -145,6 +146,9 @@ const Editor = ({ mapId, steps, theme }) => {
     // localstorage save and restore
     const [rfInstance, setRfInstance] = useState(null);
     const { setViewport } = useReactFlow();
+
+    const contextTheme = useContext(ThemeContext)
+    console.log('THEME: ', contextTheme)
 
     const onSave = useCallback(() => {
         if (rfInstance) {
@@ -254,7 +258,7 @@ const Editor = ({ mapId, steps, theme }) => {
                         onDrop={onDrop}
                         onDragOver={onDragOver}
                         onInit={setRfInstance}
-                        colorMode={theme}
+                        colorMode={['dark', 'luxury', ''].includes(contextTheme.theme) ? 'dark' : 'light'}
                         onNodeContextMenu={onNodeContextMenu}
                         fitView
                         nodeTypes={nodeTypes}

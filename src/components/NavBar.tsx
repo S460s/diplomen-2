@@ -2,6 +2,8 @@ import Link from 'next/link'
 import ThemeSwitch from './ThemeSwitch'
 
 export function NavBar({ isAdmin, isAuthed }: { isAdmin: boolean, isAuthed: boolean }) {
+
+
     return (
         <nav className="navbar rounded-box shadow">
             <div className="w-full md:flex md:items-center md:gap-2">

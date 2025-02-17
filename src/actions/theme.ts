@@ -16,8 +16,6 @@ export async function themeAction(theme: string) {
 
     try {
         const updatedUser = await prisma.user.update({ where: { id: user?.id }, data: { theme } })
-        console.log(updatedUser)
-
     } catch (e) {
         console.log('[ERROR] cannot update theme')
     }
