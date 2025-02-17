@@ -2,6 +2,8 @@
 import { Notyf } from 'notyf'
 import { createContext } from 'react'
 
+import 'notyf/notyf.min.css';
+import 'notyf/notyf.es'
 
 export const notyfContext = createContext((() => {
     let notyf = null;

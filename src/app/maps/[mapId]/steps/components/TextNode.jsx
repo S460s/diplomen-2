@@ -18,7 +18,6 @@ const InputNode = ({ data, isConnectable }) => {
                 <Handle
                     type="target"
                     position={Position.Top}
-                    style={{ background: '#555' }}
                     onConnect={(params) => console.log('handle onConnect', params)}
                     isConnectable={isConnectable}
                 />
@@ -26,7 +25,7 @@ const InputNode = ({ data, isConnectable }) => {
 
             <Link
                 href={{
-                    pathname: `/learning-maps/${mapId}/preview/${data.id}`,
+                    pathname: `/maps/${mapId}/preview/${data.id}`,
                     query: { title: data.value },
                 }}
                 id={`input_${data.id}`}
@@ -39,7 +38,6 @@ const InputNode = ({ data, isConnectable }) => {
                     type="source"
                     position={Position.Bottom}
                     id="a"
-                    style={{ background: '#555' }}
                     isConnectable={isConnectable}
                 />
             )}

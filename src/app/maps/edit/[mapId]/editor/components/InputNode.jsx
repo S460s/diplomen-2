@@ -5,11 +5,13 @@ import { Handle, Position } from '@xyflow/react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
-const InputNode = ({ data, isConnectable }) => {
+const InputNode = ({ data, isConnectable, }) => {
     const { label, id } = data;
     const upper = label === 'output node' || label === 'default node';
     const lower = label === 'input node' || label === 'default node';
     const params = useParams();
+
+
 
     return (
         <div className="flex gap-1">
@@ -35,8 +37,8 @@ const InputNode = ({ data, isConnectable }) => {
                 />
                 <label className="sr-only" htmlFor={`input_${id}`}>Enter title</label>
                 <span className='input-group-text'>
-                    <Link href={`/learning-maps/edit/${params.id}/steps/${id}`}>
-                        edit
+                    <Link href={`/maps/${params.mapId}/steps/${id}`}>
+                        edit!
                     </Link>
                 </span>
             </div>

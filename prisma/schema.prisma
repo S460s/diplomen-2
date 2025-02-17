@@ -47,6 +47,7 @@ model Map {
   ownerId Int
   owner   User     @relation(fields: [ownerId], references: [id])
   MapData MapData?
+  Step    Step[]
 }
 
 model MapLike {
@@ -59,9 +60,17 @@ model MapLike {
 }
 
 model MapData {
-  id      Int  @id @default(autoincrement())
+  id   Int  @id @default(autoincrement())
   data Json
 
-  map     Map?      @relation(fields: [mapId], references: [id])
-  mapId   Int       @unique
+  map   Map? @relation(fields: [mapId], references: [id])
+  mapId Int  @unique
+}
+
+model Step {
+  id   String @id
+  text String
+
+  mapId Int
+  map   Map? @relation(fields: [mapId], references: [id])
 }

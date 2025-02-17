@@ -34,7 +34,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/app/maps/edit/[mapId]/editor/components/ContextMenu.jsx"
-  ],
+, "src/app/maps/[mapId]/steps/components/PreviewMap.jsx"  ],
   "exclude": [
     "node_modules"
   ]
