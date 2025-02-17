@@ -17,6 +17,7 @@ export default function MapList({ maps, user }: { maps: Prisma.MapGetPayload<{}>
                             <div className="card-body">
                                 <h5 className="card-title mb-2.5">{map.title}</h5>
                                 <div className="text-base-content/50 mb-6">{formatter.format(map.updatedAt)}</div>
+                                <div className="text-base-content/50 mb-6">By {user.name}</div>
                                 <p className="mb-4">{map.description}</p>
                                 <div className="card-actions">
                                     {map.ownerId === user.id ? <Link className="btn" href={`/maps/edit/${map.id}`}>Edit</Link> : <Link href={`/maps/${map.id}`} className="btn">View</Link>}

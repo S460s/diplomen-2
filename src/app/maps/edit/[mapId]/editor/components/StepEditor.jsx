@@ -23,8 +23,6 @@ import { saveMapData } from '../actions';
 import 'notyf/notyf.min.css';
 import 'notyf/notyf.es'
 
-import { Notyf } from "notyf";
-
 
 // dagre stuff (positioning) https://reactflow.dev/examples/layout/dagre
 import dagre from '@dagrejs/dagre';

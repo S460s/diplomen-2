@@ -18,7 +18,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<{ 
     const query = params?.query || '';
     const category = params?.category || ''
 
-    let where = category === 'my' ? { ownerId: user.id, title: { contains: query } } : { title: { contains: query } };
+    let where = category === 'my' ? { ownerId: user.id, title: { contains: query } } : { title: { contains: query }, published: true };
 
     const maps = await prisma.map.findMany({
         include: {
