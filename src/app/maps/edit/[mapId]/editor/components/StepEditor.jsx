@@ -20,6 +20,12 @@ import { nanoid } from 'nanoid';
 
 import { saveMapData } from '../actions';
 
+import 'notyf/notyf.min.css';
+import 'notyf/notyf.es'
+
+import { Notyf } from "notyf";
+
+
 // dagre stuff (positioning) https://reactflow.dev/examples/layout/dagre
 import dagre from '@dagrejs/dagre';
 const dagreGraph = new dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}));
@@ -79,11 +85,16 @@ const nodeTypes = {
 };
 
 import ContextMenu from './ContextMenu';
-import { notyfContext } from '../../Notyf';
+import { notyfContext } from '../../components/Notyf'
 
 const Editor = ({ mapId, steps, theme }) => {
-
-    const notyf = useContext(notyfContext)
+    let notyf = null
+    try {
+        // notyf = new Notyf({ duration: 1000 })
+        notyf = useContext(notyfContext)
+    } catch (err) {
+        console.log('[ERROR] cannot render notyf')
+    }
     console.log(notyf)
 
 
@@ -148,6 +159,8 @@ const Editor = ({ mapId, steps, theme }) => {
             });
 
             localStorage.setItem(flowkey, JSON.stringify(flow));
+            notyf?.success('Cached!')
+
         }
     }, [rfInstance]);
 
@@ -273,7 +286,7 @@ const Editor = ({ mapId, steps, theme }) => {
                                                 currentNode.data.value = input.value;
                                             });
 
-                                            notyf.success('Map successfully saved')
+                                            notyf?.success('Saved!')
                                             await saveMapData(flow, mapId)
                                         }
                                     }}
