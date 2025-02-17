@@ -27,12 +27,18 @@ export default async function Page({ searchParams }: { searchParams?: Promise<{ 
             },
             MapLike: {
                 where: { ownerId: user?.id },
+            },
+            owner: {
+                omit: {
+                    password: true,
+                }
             }
         },
         where,
         orderBy: { updatedAt: 'asc' }
     });
 
+    console.log(maps)
 
     return (
         <div className='flex justify-center items-center gap-4'>

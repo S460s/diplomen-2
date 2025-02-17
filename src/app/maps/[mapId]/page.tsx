@@ -1,11 +1,13 @@
 import prisma from "@/lib/prisma";
 import { formatter, shortFormatter } from "@/util";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 
 
 export default async function Page({ params }: { params: { mapId: string } }) {
-    const id = Number(params.mapId);
+    const p = await params
+    const id = Number(p.mapId);
     if (!id) notFound();
 
     const map = await prisma.map.findFirst({ where: { id } });
@@ -24,7 +26,7 @@ export default async function Page({ params }: { params: { mapId: string } }) {
                     <h2 className="mt-2">{map.description}</h2>
                 </div>
                 <div className="card-footer text-center">
-                    <button className="btn">View Steps</button>
+                    <Link className="btn" href={`/maps/${map.id}/steps`} >View Steps</Link>
                 </div>
             </div>
 
