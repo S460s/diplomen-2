@@ -85,6 +85,7 @@ const nodeTypes = {
 import ContextMenu from './ContextMenu';
 import { notyfContext } from '../../components/Notyf'
 import { ThemeContext } from '@/components/ThemeContext';
+import { useDebouncedCallback } from 'use-debounce';
 
 const Editor = ({ mapId, steps }) => {
     let notyf = null
@@ -167,12 +168,15 @@ const Editor = ({ mapId, steps }) => {
     const [rfInstance, setRfInstance] = useState(null);
     const { setViewport } = useReactFlow();
 
+    // save every 1 second
+    const debounced = useDebouncedCallback(async () => {
+        console.log('SAVED!')
+        await onDBSave()
+    }, 1500)
+
     useEffect(() => { // this seems to work
-        const asyncFunc = async () => {
-            await onDBSave()
-        }
-        asyncFunc()
-    }, [nodes.length])
+        debounced()
+    }, [nodes, edges])
 
     const contextTheme = useContext(ThemeContext)
     console.log('THEME: ', contextTheme)
