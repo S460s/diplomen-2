@@ -18,10 +18,7 @@ export default async function Page({
 
 
     return (
-        <div className='flex'>
-
-
-
+        <div className='flex [&>h1]:text-lg'>
             <Editor
                 stepId={p.stepId}
                 id={p.mapId}

@@ -308,8 +308,8 @@ const Editor = ({ mapId, steps }) => {
                         {menu && <ContextMenu onClick={onPaneClick} {...menu} />}
 
                         <Panel position="top-right" className="flex gap-2">
-                            <button className='btn' onClick={onCacheSave}>Cache</button>
-                            <button className='btn' onClick={onRestore}>Restore</button>
+                            <button disabled={true} className='btn' onClick={onCacheSave}>Cache</button>
+                            <button disabled={true} className='btn' onClick={onRestore}>Restore</button>
                             <button className='btn' onClick={onLayout}>Order</button>
                             <button
                                 className='btn'

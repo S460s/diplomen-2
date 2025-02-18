@@ -3,7 +3,6 @@
 import { useActionState } from "react"
 import { updateUser } from "./actions"
 import Form from "next/form";
-import prisma from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
 
 
