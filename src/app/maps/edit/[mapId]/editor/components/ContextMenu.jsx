@@ -2,6 +2,7 @@
 
 import React, { useCallback } from 'react';
 import { useReactFlow } from '@xyflow/react';
+import { deleteStep } from '../actions';
 
 export default function ContextMenu({
     id,
@@ -33,9 +34,10 @@ export default function ContextMenu({
         });
     }, [id, getNode, addNodes]);
 
-    const deleteNode = useCallback(() => {
+    const deleteNode = useCallback(async () => {
         setNodes((nodes) => nodes.filter((node) => node.id !== id));
         setEdges((edges) => edges.filter((edge) => edge.source !== id));
+        await deleteStep(id)
     }, [id, setNodes, setEdges]);
     return (
         <div

@@ -1,5 +1,5 @@
 'use client';
-import React, { useRef, useCallback, useState, useEffect, useContext } from 'react';
+import React, { useRef, useCallback, useState, useEffect, useContext, useLayoutEffect } from 'react';
 import {
     ReactFlow,
     ReactFlowProvider,
@@ -138,6 +138,7 @@ const Editor = ({ mapId, steps }) => {
             inputs.forEach((input) => {
                 const id = input.id.slice(6);
                 const currentNode = flow.nodes.find((n) => n.id === id);
+                console.log(input)
                 currentNode.data.value = input.value;
             });
 
@@ -169,13 +170,14 @@ const Editor = ({ mapId, steps }) => {
     const { setViewport } = useReactFlow();
 
     // save every 1 second
-    const debounced = useDebouncedCallback(async () => {
-        console.log('SAVED!')
+
+    const debouncedSave = useDebouncedCallback(async () => { // TODO: fires on start as well
+        notyf.success('autosave')
         await onDBSave()
     }, 1500)
 
     useEffect(() => { // this seems to work
-        debounced()
+        debouncedSave()
     }, [nodes, edges])
 
     const contextTheme = useContext(ThemeContext)
