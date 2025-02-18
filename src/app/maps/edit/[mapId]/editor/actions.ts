@@ -24,3 +24,8 @@ export async function saveMapData(flow: Prisma.JsonObject, mapId: string) {
         console.log('[ERROR] could not save map data', err);
     }
 }
+
+
+export async function deleteStep(stepId: string) {
+
+}

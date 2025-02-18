@@ -123,6 +123,27 @@ const Editor = ({ mapId, steps }) => {
     // Context Menu
     const [menu, setMenu] = useState(null);
     const menuRef = useRef(null);
+
+
+
+    const onDBSave = async () => {
+        if (rfInstance) {
+            const flow = rfInstance.toObject();
+            const inputs =
+                document.querySelectorAll('[data-step-input]'); // get the inputs as they are not controlled
+
+            // TODO: care about good code and performance
+            console.log('[DEBUG] saving map data')
+            inputs.forEach((input) => {
+                const id = input.id.slice(6);
+                const currentNode = flow.nodes.find((n) => n.id === id);
+                currentNode.data.value = input.value;
+            });
+
+            await saveMapData(flow, mapId)
+        }
+    }
+
     const onNodeContextMenu = useCallback(
         (event, node) => {
             event.preventDefault();
@@ -207,6 +228,10 @@ const Editor = ({ mapId, steps }) => {
         event.dataTransfer.effectAllowed = 'move';
     };
 
+    useEffect(() => {
+        console.log('NODE UPDATE')
+    }, [nodes])
+
     const onDrop = useCallback(
         (event) => {
             event.preventDefault();
@@ -228,6 +253,9 @@ const Editor = ({ mapId, steps }) => {
             };
 
             setNodes((nds) => [...nds, newNode]);
+            const asyncFunc = async () => {
+                await onDBS
+            }
         },
         [screenToFlowPosition, type]
     );
@@ -273,31 +301,15 @@ const Editor = ({ mapId, steps }) => {
                             <button className='btn' onClick={onCacheSave}>Cache</button>
                             <button className='btn' onClick={onRestore}>Restore</button>
                             <button className='btn' onClick={onLayout}>Order</button>
-                            <form action="">
-                                <button
-                                    className='btn'
-                                    formAction={async () => {
-                                        if (rfInstance) {
-                                            const flow = rfInstance.toObject();
-                                            const inputs =
-                                                document.querySelectorAll('[data-step-input]'); // get the inputs as they are not controlled
-
-                                            // TODO: care about good code and performance
-                                            console.log('[DEBUG] saving map data')
-                                            inputs.forEach((input) => {
-                                                const id = input.id.slice(6);
-                                                const currentNode = flow.nodes.find((n) => n.id === id);
-                                                currentNode.data.value = input.value;
-                                            });
-
-                                            notyf?.success('Saved!')
-                                            await saveMapData(flow, mapId)
-                                        }
-                                    }}
-                                >
-                                    Save in DB
-                                </button>
-                            </form>
+                            <button
+                                className='btn'
+                                onClick={async () => {
+                                    notyf.success('Saved!')
+                                    await onDBSave()
+                                }}
+                            >
+                                Save in DB
+                            </button>
                         </Panel>
 
                         <Panel position="top-left" className="flex gap-2">
