@@ -124,7 +124,7 @@ const Editor = ({ mapId, steps }) => {
     const [menu, setMenu] = useState(null);
     const menuRef = useRef(null);
 
-
+    const [disabled, setDisabled] = useState(true)
 
     const onDBSave = async () => {
         if (rfInstance) {
@@ -141,6 +141,7 @@ const Editor = ({ mapId, steps }) => {
             });
 
             await saveMapData(flow, mapId)
+            setDisabled(false)
         }
     }
 
@@ -165,6 +166,13 @@ const Editor = ({ mapId, steps }) => {
     // localstorage save and restore
     const [rfInstance, setRfInstance] = useState(null);
     const { setViewport } = useReactFlow();
+
+    useEffect(() => { // this seems to work
+        const asyncFunc = async () => {
+            await onDBSave()
+        }
+        asyncFunc()
+    }, [nodes.length])
 
     const contextTheme = useContext(ThemeContext)
     console.log('THEME: ', contextTheme)
@@ -228,9 +236,6 @@ const Editor = ({ mapId, steps }) => {
         event.dataTransfer.effectAllowed = 'move';
     };
 
-    useEffect(() => {
-        console.log('NODE UPDATE')
-    }, [nodes])
 
     const onDrop = useCallback(
         (event) => {
@@ -249,13 +254,12 @@ const Editor = ({ mapId, steps }) => {
                 id,
                 type: 'inputType',
                 position,
-                data: { label: `${type} node`, id },
+                data: { label: `${type} node`, id, disabled },
             };
 
             setNodes((nds) => [...nds, newNode]);
-            const asyncFunc = async () => {
-                await onDBS
-            }
+            setDisabled(false)
+
         },
         [screenToFlowPosition, type]
     );

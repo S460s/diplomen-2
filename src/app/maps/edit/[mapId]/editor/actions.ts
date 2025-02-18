@@ -27,5 +27,11 @@ export async function saveMapData(flow: Prisma.JsonObject, mapId: string) {
 
 
 export async function deleteStep(stepId: string) {
-
+    let step = null;
+    try {
+        await prisma.step.findFirst({ where: { id: stepId } })
+    } catch (err) {
+        console.log('[ERROR] cannot find step')
+    }
+    return step
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { memo } from 'react';
+import React, { memo, useContext } from 'react';
 import { Handle, Position } from '@xyflow/react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
@@ -10,8 +10,6 @@ const InputNode = ({ data, isConnectable, }) => {
     const upper = label === 'output node' || label === 'default node';
     const lower = label === 'input node' || label === 'default node';
     const params = useParams();
-
-
 
     return (
         <div className="flex gap-1">
@@ -36,11 +34,14 @@ const InputNode = ({ data, isConnectable, }) => {
                     defaultValue={data.value}
                 />
                 <label className="sr-only" htmlFor={`input_${id}`}>Enter title</label>
+
+
                 <span className='input-group-text'>
                     <Link href={`/maps/${params.mapId}/steps/${id}`}>
                         edit!
                     </Link>
                 </span>
+
             </div>
 
 
