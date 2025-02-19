@@ -55,10 +55,30 @@ export function EditForm({ map }: { map: Prisma.MapGetPayload<{}> }) {
                                 <button type="submit" name="submitButton" className="btn btn-primary" disabled={pending}>Update</button>
                                 <Link href={`/maps/edit/${map.id}/editor`} className="btn">Editor</Link>
                                 <Link href={`/maps/${map.id}`} className="btn">Preview</Link>
-                                <button onClick={async () => {
-                                    await deleteMap(map.id)
-                                }} type="button" name="delete" className="btn btn-error">Delete</button>
 
+                                <button type="button" className="btn btn-error" aria-haspopup="dialog" aria-expanded="false" aria-controls="basic-modal" data-overlay="#basic-modal" >Delete</button>
+
+                                <div id="basic-modal" className="overlay modal overlay-open:opacity-100 hidden" role="dialog" tabIndex={-1}>
+                                    <div className="modal-dialog overlay-open:opacity-100">
+                                        <div className="modal-content">
+                                            <div className="modal-header">
+                                                <h3 className="modal-title">Map Deletion</h3>
+                                                <button type="button" className="btn btn-text btn-circle btn-sm absolute end-3 top-3" aria-label="Close" data-overlay="#basic-modal" >
+                                                    <span className="icon-[tabler--x] size-4"></span>
+                                                </button>
+                                            </div>
+                                            <div className="modal-body">
+                                                Are you sure you want to delete map "{map.title}"?
+                                            </div>
+                                            <div className="modal-footer">
+                                                <button type="button" className="btn btn-soft btn-secondary" data-overlay="#basic-modal">Close</button>
+                                                <button onClick={async () => {
+                                                    await deleteMap(map.id)
+                                                }} type="button" name="delete" className="btn btn-error" data-overlay="#basic-modal" >Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </div>
