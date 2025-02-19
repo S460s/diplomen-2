@@ -28,6 +28,7 @@
     "notyf": "^3.10.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-hotkeys-hook": "^4.6.1",
     "react-markdown": "^9.0.3",
     "server-only": "^0.0.1",
     "theme-change": "^2.5.0",

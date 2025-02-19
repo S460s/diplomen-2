@@ -7,6 +7,7 @@ import { getUser } from '@/lib/dal';
 import { redirect } from 'next/navigation';
 import { Search } from './components/Search';
 import { title } from 'process';
+import Link from 'next/link';
 
 export default async function Page({ searchParams }: { searchParams?: Promise<{ query: string, category: string }> }) {
     const user = await getUser();
@@ -44,6 +45,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<{ 
         <div className='flex justify-center items-center gap-4'>
             <div className='w-[100%] flex justify-center flex-col items-center'>
                 <h1 className='text-base-content text-3xl font-semibold m-4'>Maps</h1>
+                <Link className='btn mb-2' href={'/maps/create'}>Create</Link>
                 <Search />
                 <div>
                     <MapList maps={maps} user={user} />

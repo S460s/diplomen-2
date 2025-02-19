@@ -1,7 +1,7 @@
 'use client';
 // https://mdxeditor.dev/editor/docs/customizing-toolbar
 // InitializedMDXEditor.tsx
-import type { ForwardedRef } from 'react';
+import { useContext, type ForwardedRef } from 'react';
 import '@mdxeditor/editor/style.css';
 import {
   headingsPlugin,

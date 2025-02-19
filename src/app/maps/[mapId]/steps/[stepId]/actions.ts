@@ -15,7 +15,7 @@ export async function saveStep(mapId: string, stepId: string, md: string) {
             update: step
         });
 
-        console.log(`CREATED STEP WITH ID ${newStep.id}`);
+        console.log(`UPDATED STEP WITH ID ${newStep.id}`);
     } catch (e) {
         console.log('fucked up in saving step', e);
     }

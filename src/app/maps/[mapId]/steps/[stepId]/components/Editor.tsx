@@ -6,6 +6,7 @@ import { MDXEditorMethods } from '@mdxeditor/editor';
 import { saveStep } from '../actions';
 
 import { notyfContext } from '@/app/maps/edit/[mapId]/components/Notyf';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 // import { saveStep } from '@/lib/actions';
 // https://github.com/tailwindlabs/tailwindcss-typography
@@ -29,7 +30,11 @@ export default function Editor({
   } catch (err) {
     console.log('[ERROR] cannot render notyf')
   }
-  console.log(notyf)
+
+  useHotkeys('ctrl+s', async () => {
+    notyf?.success('Saved!')
+    await saveStep(id, stepId, ref.current?.getMarkdown() || '')
+  })
 
 
   return (
