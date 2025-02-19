@@ -30,7 +30,7 @@ export default function InitializedMDXEditor({
     <MDXEditor
       className="prose flex-1"
       onChange={(e) => {
-        console.log(e);
+        // TODO: save doesn't work when input in focus
       }}
       plugins={[
         // Example Plugin Usage

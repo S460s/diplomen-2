@@ -86,6 +86,7 @@ import ContextMenu from './ContextMenu';
 import { notyfContext } from '../../components/Notyf'
 import { ThemeContext } from '@/components/ThemeContext';
 import { useDebouncedCallback } from 'use-debounce';
+import { revalidatePath } from 'next/cache';
 
 const Editor = ({ mapId, steps }) => {
     let notyf = null
@@ -125,7 +126,6 @@ const Editor = ({ mapId, steps }) => {
     const [menu, setMenu] = useState(null);
     const menuRef = useRef(null);
 
-    const [disabled, setDisabled] = useState(true)
 
     const onDBSave = async () => {
         if (rfInstance) {
@@ -142,8 +142,9 @@ const Editor = ({ mapId, steps }) => {
                 currentNode.data.value = input.value;
             });
 
+            console.log('FLOW\n\n\n', flow)
             await saveMapData(flow, mapId)
-            setDisabled(false)
+
         }
     }
 
@@ -180,8 +181,7 @@ const Editor = ({ mapId, steps }) => {
         debouncedSave()
     }, [nodes, edges])
 
-    const contextTheme = useContext(ThemeContext)
-    console.log('THEME: ', contextTheme)
+    // const contextTheme = useContext(ThemeContext)// later for theme
 
     const onCacheSave = useCallback(() => {
         if (rfInstance) {
@@ -260,11 +260,11 @@ const Editor = ({ mapId, steps }) => {
                 id,
                 type: 'inputType',
                 position,
-                data: { label: `${type} node`, id, disabled },
+                data: { label: `${type} node`, id },
             };
 
             setNodes((nds) => [...nds, newNode]);
-            setDisabled(false)
+
 
         },
         [screenToFlowPosition, type]
@@ -296,7 +296,8 @@ const Editor = ({ mapId, steps }) => {
                         onDrop={onDrop}
                         onDragOver={onDragOver}
                         onInit={setRfInstance}
-                        colorMode={['dark', 'luxury', ''].includes(contextTheme.theme) ? 'dark' : 'light'}
+                        // colorMode={['dark', 'luxury', ''].includes(contextTheme.theme) ? 'dark' : 'light'} // removed dark themes as of now
+                        colorMode='light'
                         onNodeContextMenu={onNodeContextMenu}
                         fitView
                         nodeTypes={nodeTypes}
@@ -353,7 +354,7 @@ const Editor = ({ mapId, steps }) => {
 };
 
 export default function StepEditor({ mapId, steps }) {
-    console.log(steps);
+    console.log('stesp', steps);
     return (
         <ReactFlowProvider>
             <Editor mapId={mapId} steps={steps} />

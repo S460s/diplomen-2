@@ -32,7 +32,7 @@ export default async function RootLayout({
   const currentUser = await getUser(); // only for cosmetics, do checks when dealing with data
 
   return (
-    <html lang="en" data-theme={currentUser?.theme || 'soft'}>
+    <html lang="en" data-theme={currentUser?.theme || 'corporate'}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

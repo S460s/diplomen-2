@@ -5,6 +5,7 @@ import { redirect } from "next/navigation"
 
 export function LogOutButton() {
     const handleLogOut = async () => {
+        localStorage.clear()
         await logOut()
         redirect('/signup')
     }

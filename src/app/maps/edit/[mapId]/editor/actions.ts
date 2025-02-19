@@ -2,9 +2,10 @@
 
 import prisma from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 export async function saveMapData(flow: Prisma.JsonObject, mapId: string) {
-    console.log('[DEBUG] saving map data');
+    console.log('[DEBUG] saving map data', flow);
 
     try {
         const newFlow = await prisma.mapData.upsert({
@@ -20,6 +21,7 @@ export async function saveMapData(flow: Prisma.JsonObject, mapId: string) {
         });
 
         console.log(newFlow);
+        revalidatePath(`/maps/edit/${mapId}/editor`)
     } catch (err) {
         console.log('[ERROR] could not save map data', err);
     }
