@@ -15,7 +15,7 @@ export default async function Page({ params }: { params: { mapId: string } }) {
 
     return (
         <div className="flex justify-center items-center h-[100%]">
-            <div className="card card-compact sm:max-w-sm p-8">
+            <div className="card card-compact sm:max-w-[80%] p-8">
                 <div className="card-header">
                     <h5 className="card-title">{map.title}</h5>
                 </div>
@@ -23,7 +23,7 @@ export default async function Page({ params }: { params: { mapId: string } }) {
                     <h3 className="font-light text-sm">Created at: {shortFormatter.format(map.createdAt)}</h3>
                     <h3 className="font-light text-sm">Updated at: {shortFormatter.format(map.updatedAt)}</h3>
 
-                    <h2 className="mt-2">{map.description}</h2>
+                    <h4 className="mt-2">{map.description}</h4>
                 </div>
                 <div className="card-footer text-center">
                     <Link className="btn" href={`/maps/${map.id}/steps`} >View Steps</Link>

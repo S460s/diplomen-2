@@ -74,7 +74,8 @@ const Preview = ({ mapId, steps }) => {
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}
             fitView
-            colorMode={['dark', 'luxury', ''].includes(contextTheme.theme) ? 'dark' : 'light'}
+            // colorMode={['dark', 'luxury', ''].includes(contextTheme.theme) ? 'dark' : 'light'}
+            colorMode='light'
             nodeTypes={nodeTypes}
             defaultEdgeOptions={{ type: 'smoothstep' }}
             nodesDraggable={false}
