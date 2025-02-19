@@ -54,16 +54,16 @@ model MapLike {
   id Int @id @default(autoincrement())
 
   ownerId Int
-  owner   User @relation(fields: [ownerId], references: [id])
+  owner   User @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   mapId   Int
-  map     Map  @relation(fields: [mapId], references: [id])
+  map     Map  @relation(fields: [mapId], references: [id], onDelete: Cascade)
 }
 
 model MapData {
   id   Int  @id @default(autoincrement())
   data Json
 
-  map   Map? @relation(fields: [mapId], references: [id])
+  map   Map? @relation(fields: [mapId], references: [id], onDelete: Cascade)
   mapId Int  @unique
 }
 
@@ -72,5 +72,5 @@ model Step {
   text String
 
   mapId Int
-  map   Map? @relation(fields: [mapId], references: [id])
+  map   Map? @relation(fields: [mapId], references: [id], onDelete: Cascade)
 }

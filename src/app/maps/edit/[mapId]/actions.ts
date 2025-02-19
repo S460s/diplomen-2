@@ -66,3 +66,17 @@ export async function editMap(id: number, state: FormState, formData: FormData) 
     revalidatePath('/maps')
     redirect('/maps')
 }
+
+export async function deleteMap(id: number) {
+    // const user = await getUser() // add checks if the user who tries to delete the map is the actual owner
+    console.log('ID: ', id)
+    try {
+        const map = await prisma.map.delete({ where: { id } })
+        console.log('[LOG] deleted map with id', map.id)
+    } catch (err) {
+        console.log('[ERROR] cannot delete map.', err)
+    }
+
+    revalidatePath('/maps')
+    redirect('/maps')
+}

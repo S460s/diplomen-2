@@ -1,6 +1,6 @@
 'use client'
 import { useActionState } from "react";
-import { editMap } from "../actions";
+import { deleteMap, editMap } from "../actions";
 import { Prisma } from "@prisma/client";
 import clsx from "clsx";
 import Link from "next/link";
@@ -54,6 +54,11 @@ export function EditForm({ map }: { map: Prisma.MapGetPayload<{}> }) {
                             <div className="mt-4 flex gap-2">
                                 <button type="submit" name="submitButton" className="btn btn-primary" disabled={pending}>Update</button>
                                 <Link href={`/maps/edit/${map.id}/editor`} className="btn">Editor</Link>
+                                <Link href={`/maps/${map.id}`} className="btn">Preview</Link>
+                                <button onClick={async () => {
+                                    await deleteMap(map.id)
+                                }} type="button" name="delete" className="btn btn-error">Delete</button>
+
                             </div>
                         </form>
                     </div>
