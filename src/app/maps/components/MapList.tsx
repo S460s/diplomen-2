@@ -9,7 +9,7 @@ export default function MapList({ maps, user }: { maps: Prisma.MapGetPayload<{ i
 
     return (
         <div className="">
-            <div className='p-8 flex gap-4 flex-wrap'>
+            <div className='p-8 flex gap-4 flex-wrap justify-center items-center'>
                 {maps.map((map) => {
                     return (
                         <div key={map.id} className="card sm:max-w-sm">
