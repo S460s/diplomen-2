@@ -91,7 +91,7 @@ import ContextMenu from "./ContextMenu";
 import { notyfContext } from "../../components/Notyf";
 import { ThemeContext } from "@/components/ThemeContext";
 import { useDebouncedCallback } from "use-debounce";
-import { revalidatePath } from "next/cache";
+import Link from "next/link";
 
 const Editor = ({ mapId, steps }) => {
   let notyf = null;
@@ -140,8 +140,9 @@ const Editor = ({ mapId, steps }) => {
       inputs.forEach((input) => {
         const id = input.id.slice(6);
         const currentNode = flow.nodes.find((n) => n.id === id);
-        console.log(input);
-        currentNode.data.value = input.value;
+        if (currentNode) {
+          currentNode.data.value = input.value;
+        }
       });
 
       console.log("FLOW\n\n\n", flow);
@@ -313,27 +314,41 @@ const Editor = ({ mapId, steps }) => {
             {menu && <ContextMenu onClick={onPaneClick} {...menu} />}
 
             <Panel position="top-right" className="flex gap-2">
-              <button disabled={true} className="btn" onClick={onCacheSave}>
+              <button
+                disabled={false}
+                className="btn btn-secondary"
+                onClick={onCacheSave}
+              >
                 Cache
               </button>
-              <button disabled={true} className="btn" onClick={onRestore}>
+              <button
+                disabled={false}
+                className="btn btn-secondary"
+                onClick={onRestore}
+              >
                 Restore
               </button>
-              <button className="btn" onClick={onLayout}>
+              <button className="btn btn-accent" onClick={onLayout}>
                 Order
               </button>
               <button
-                className="btn"
+                className="btn btn-info"
                 onClick={async () => {
                   notyf.success("Saved!");
                   await onDBSave();
                 }}
               >
-                Save in DB
+                Save
               </button>
             </Panel>
 
             <Panel position="top-left" className="flex gap-2">
+              <Link
+                href={`/maps/edit/${mapId}`}
+                className="btn bg-error text-error-content"
+              >
+                Back
+              </Link>
               <button
                 className="btn"
                 onDragStart={(event) => onDragStart(event, "input")}
@@ -364,7 +379,6 @@ const Editor = ({ mapId, steps }) => {
 };
 
 export default function StepEditor({ mapId, steps }) {
-  console.log("stesp", steps);
   return (
     <ReactFlowProvider>
       <Editor mapId={mapId} steps={steps} />
