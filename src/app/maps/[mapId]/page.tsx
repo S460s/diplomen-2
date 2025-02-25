@@ -3,7 +3,11 @@ import { shortFormatter } from "@/util";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-export default async function Page({ params }: { params: { mapId: string } }) {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ mapId: string }>;
+}) {
   const p = await params;
   const id = Number(p.mapId);
   if (!id) notFound();

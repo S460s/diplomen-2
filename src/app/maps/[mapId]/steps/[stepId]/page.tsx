@@ -4,7 +4,7 @@ import Editor from "./components/Editor";
 export default async function Page({
   params,
 }: {
-  params: { mapId: string; stepId: string };
+  params: Promise<{ mapId: string; stepId: string }>;
 }) {
   const p = await params;
   let step = null;
