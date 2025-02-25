@@ -5,6 +5,8 @@ import { Handle, Position } from "@xyflow/react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
+import "./style.css";
+
 const InputNode = ({ data, isConnectable }) => {
   const { label, id } = data;
   const upper = label === "output node" || label === "default node";

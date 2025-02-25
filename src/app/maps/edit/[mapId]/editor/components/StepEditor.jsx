@@ -5,7 +5,6 @@ import React, {
   useState,
   useEffect,
   useContext,
-  useLayoutEffect,
 } from "react";
 import {
   ReactFlow,
@@ -20,6 +19,7 @@ import {
   BackgroundVariant,
   Panel,
   ConnectionLineType,
+  reconnectEdge,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 
@@ -282,15 +282,37 @@ const Editor = ({ mapId, steps }) => {
     setEdges([...layoutedEdges]);
   }, [nodes, edges]);
 
+  const edgeReconnectSuccessful = useRef(true);
+  const onReconnectStart = useCallback(() => {
+    edgeReconnectSuccessful.current = false;
+  }, []);
+
+  const onReconnect = useCallback((oldEdge, newConnection) => {
+    edgeReconnectSuccessful.current = true;
+    setEdges((els) => reconnectEdge(oldEdge, newConnection, els));
+  }, []);
+
+  const onReconnectEnd = useCallback((_, edge) => {
+    if (!edgeReconnectSuccessful.current) {
+      setEdges((eds) => eds.filter((e) => e.id !== edge.id));
+    }
+
+    edgeReconnectSuccessful.current = true;
+  }, []);
+
   return (
     <div id="app" className="w-screen h-full flex flex-col md:flex-row">
       <div className="flex-grow">
         <div style={{ width: "100vw", height: "100%" }} ref={reactFlowWrapper}>
           <ReactFlow
             ref={menuRef}
+            className="touch-flow"
             onPaneClick={onPaneClick}
             nodes={nodes}
             edges={edges}
+            onReconnect={onReconnect}
+            onReconnectStart={onReconnectStart}
+            onReconnectEnd={onReconnectEnd}
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}
