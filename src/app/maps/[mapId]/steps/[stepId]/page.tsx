@@ -1,30 +1,27 @@
-import prisma from '@/lib/prisma';
-import Editor from './components/Editor';
-
+import prisma from "@/lib/prisma";
+import Editor from "./components/Editor";
 
 export default async function Page({
-    params,
+  params,
 }: {
-    params: { mapId: string; stepId: string };
+  params: { mapId: string; stepId: string };
 }) {
-    const p = await params;
-    let step = null;
+  const p = await params;
+  let step = null;
 
-    try {
-        step = await prisma.step.findFirst({ where: { id: p.stepId } });
-    } catch (err) {
-        console.log('[ERROR] cannot find step')
-    }
+  try {
+    step = await prisma.step.findFirst({ where: { id: p.stepId } });
+  } catch (err) {
+    console.log("[ERROR] cannot find step", err);
+  }
 
-
-    return (
-        <div className='flex [&>h1]:text-lg'>
-            <Editor
-                stepId={p.stepId}
-                id={p.mapId}
-                markdown={step?.text || ''}
-            ></Editor>
-
-        </div>
-    );
+  return (
+    <div className="flex [&>h1]:text-lg">
+      <Editor
+        stepId={p.stepId}
+        id={p.mapId}
+        markdown={step?.text || ""}
+      ></Editor>
+    </div>
+  );
 }

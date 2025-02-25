@@ -1,7 +1,7 @@
 "use client";
 // https://mdxeditor.dev/editor/docs/customizing-toolbar
 // InitializedMDXEditor.tsx
-import { useContext, type ForwardedRef } from "react";
+import { type ForwardedRef } from "react";
 import "@mdxeditor/editor/style.css";
 import {
   headingsPlugin,
@@ -29,9 +29,6 @@ export default function InitializedMDXEditor({
   return (
     <MDXEditor
       className="bg-base-100 text-base-content border border-primary rounded-lg p-4 prose flex"
-      onChange={(e) => {
-        // TODO: save doesn't work when input in focus
-      }}
       plugins={[
         // Example Plugin Usage
         headingsPlugin(),

@@ -1,71 +1,69 @@
-import 'server-only'
+import "server-only";
 
-import { cookies } from 'next/headers'
-import { cache } from 'react'
-import { decrypt } from './session'
+import { cookies } from "next/headers";
+import { cache } from "react";
+import { decrypt } from "./session";
 // import { redirect } from 'next/navigation'
-import prisma from './prisma'
+import prisma from "./prisma";
 
 export const verifySession = cache(async () => {
-    const cookie = (await cookies()).get('session')?.value
-    const session = await decrypt(cookie)
+  const cookie = (await cookies()).get("session")?.value;
+  const session = await decrypt(cookie);
 
+  if (!session?.userId) {
+    console.log("[LOG] could not verify user session");
+    return null; // redirect causes infinite
+  }
 
-    if (!session?.userId) {
-        console.log('[LOG] could not verify user session')
-        return null; // redirect causes infinite
-    }
+  return { isAuth: true, userId: session?.userId };
+});
 
-    return { isAuth: true, userId: session?.userId }
-})
+export const isAdminUser = cache(async () => {
+  const session = await verifySession();
+  if (!session) {
+    console.log("[LOG] no session");
+    return null;
+  }
 
-export const isAdminUser = (cache(async () => {
-    const session = await verifySession()
-    if (!session) {
-        console.log('[LOG] no session')
-        return null
-    }
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: parseInt(session.userId as string),
+      },
+      omit: {
+        password: true,
+        name: true,
+        email: true,
+      },
+    });
 
-    try {
-        const user = await prisma.user.findUnique({
-            where: {
-                id: parseInt(session.userId as string)
-            },
-            omit: {
-                password: true,
-                name: true,
-                email: true
-            }
-        })
+    return user?.isAdmin || null;
+  } catch (err) {
+    console.log("[ERROR] failed to get user", err);
+    return null;
+  }
+});
 
-        return user?.isAdmin || null
-    } catch (err) {
-        console.log('[ERROR] failed to get user')
-        return null
-    }
-}))
+export const getUser = cache(async () => {
+  const session = await verifySession();
+  if (!session) {
+    console.log("[LOG] no session");
+    return null;
+  }
 
-export const getUser = (cache(async () => {
-    const session = await verifySession()
-    if (!session) {
-        console.log('[LOG] no session')
-        return null
-    }
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: parseInt(session.userId as string),
+      },
+      omit: {
+        password: true,
+      },
+    });
 
-
-    try {
-        const user = await prisma.user.findUnique({
-            where: {
-                id: parseInt(session.userId as string)
-            },
-            omit: {
-                password: true
-            }
-        })
-
-        return user
-    } catch (err) {
-        console.log('[ERROR] failed to get user')
-        return null
-    }
-}))
+    return user;
+  } catch (err) {
+    console.log("[ERROR] failed to get user", err);
+    return null;
+  }
+});

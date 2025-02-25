@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-import Footer from '@/components/Footer'
+import Footer from "@/components/Footer";
 import { NavBar } from "@/components/NavBar";
 import { getUser } from "@/lib/dal";
 import FlyonuiScript from "@/components/FlyonUILoader";
@@ -28,22 +28,19 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   const currentUser = await getUser(); // only for cosmetics, do checks when dealing with data
 
   return (
-    <html lang="en" data-theme={currentUser?.theme || 'corporate'}>
+    <html lang="en" data-theme={currentUser?.theme || "system"}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <FlyonuiScript />
 
-        <ThemeProvider defaultTheme={currentUser?.theme || ''}>
+        <ThemeProvider defaultTheme={currentUser?.theme || ""}>
           <div className="flex flex-col h-screen">
             <NavBar isAdmin={!!currentUser?.isAdmin} isAuthed={!!currentUser} />
-            <div className="flex-grow">
-              {children}
-            </div>
+            <div className="flex-grow">{children}</div>
             <Footer />
           </div>
         </ThemeProvider>
