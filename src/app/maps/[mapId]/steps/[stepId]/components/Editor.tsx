@@ -1,12 +1,14 @@
-'use client';
+"use client";
 
-import { useContext, useRef } from 'react';
-import { ForwardRefEditor } from './ForwardRefEditor';
-import { MDXEditorMethods } from '@mdxeditor/editor';
-import { saveStep } from '../actions';
+import { useContext, useRef } from "react";
+import { ForwardRefEditor } from "./ForwardRefEditor";
+import { MDXEditorMethods } from "@mdxeditor/editor";
+import { saveStep } from "../actions";
 
-import { notyfContext } from '@/app/maps/edit/[mapId]/components/Notyf';
-import { useHotkeys } from 'react-hotkeys-hook';
+import { notyfContext } from "@/app/maps/edit/[mapId]/components/Notyf";
+import { useHotkeys } from "react-hotkeys-hook";
+import { ThemeContext } from "@/components/ThemeContext";
+import "./editor.css";
 
 // import { saveStep } from '@/lib/actions';
 // https://github.com/tailwindlabs/tailwindcss-typography
@@ -22,30 +24,37 @@ export default function Editor({
   const ref = useRef<MDXEditorMethods>(null);
   console.log(ref.current?.getMarkdown());
 
-  let notyf = null
+  let notyf = null;
 
   try {
     // notyf = new Notyf({ duration: 1000 })
-    notyf = useContext(notyfContext)
+    notyf = useContext(notyfContext);
   } catch (err) {
-    console.log('[ERROR] cannot render notyf')
+    console.log("[ERROR] cannot render notyf");
   }
 
-  useHotkeys('ctrl+s', async () => {
-    notyf?.success('Saved!')
-    await saveStep(id, stepId, ref.current?.getMarkdown() || '')
-  })
+  useHotkeys("ctrl+s", async () => {
+    notyf?.success("Saved!");
+    await saveStep(id, stepId, ref.current?.getMarkdown() || "");
+  });
 
+  const contextTheme = useContext(ThemeContext);
+  const isDark = ["dark", "luxury", ""].includes(contextTheme?.theme || "");
 
   return (
     <div className="w-screen m-2 border-primary border-2">
       <div className="flex justify-center">
-        <ForwardRefEditor markdown={markdown} ref={ref}></ForwardRefEditor>
+        <ForwardRefEditor
+          isDark={isDark}
+          markdown={markdown}
+          ref={ref}
+        ></ForwardRefEditor>
 
-        <button className='btn'
+        <button
+          className="btn"
           onClick={async (e) => {
-            await saveStep(id, stepId, ref.current?.getMarkdown() || '')
-            notyf?.success('Saved')
+            await saveStep(id, stepId, ref.current?.getMarkdown() || "");
+            notyf?.success("Saved");
           }}
         >
           Save

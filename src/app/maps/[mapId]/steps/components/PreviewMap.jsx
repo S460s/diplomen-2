@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React, { useRef, useCallback, useEffect, useContext } from 'react';
+import React, { useRef, useCallback, useEffect, useContext } from "react";
 import {
   ReactFlow,
   ReactFlowProvider,
@@ -13,17 +13,17 @@ import {
   useReactFlow,
   BackgroundVariant,
   ConnectionLineType,
-  Panel
-} from '@xyflow/react';
-import '@xyflow/react/dist/style.css';
+  Panel,
+} from "@xyflow/react";
+import "@xyflow/react/dist/style.css";
 
 const initialNodes = [];
 const initialEdges = [];
 
 // custom elements
-import TextNode from './TextNode';
-import Link from 'next/link';
-import { ThemeContext } from '@/components/ThemeContext';
+import TextNode from "./TextNode";
+import Link from "next/link";
+import { ThemeContext } from "@/components/ThemeContext";
 const nodeTypes = {
   inputType: TextNode,
 };
@@ -33,7 +33,7 @@ const Preview = ({ mapId, steps }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
-  const contextTheme = useContext(ThemeContext)
+  const contextTheme = useContext(ThemeContext);
   console.log(mapId);
 
   const onConnect = useCallback(
@@ -66,7 +66,7 @@ const Preview = ({ mapId, steps }) => {
   return (
     <div id="app" className="w-screen h-full flex flex-col md:flex-row">
       <div className="flex-grow">
-        <div style={{ width: '100vw', height: '100%' }} ref={reactFlowWrapper}>
+        <div style={{ width: "100vw", height: "100%" }} ref={reactFlowWrapper}>
           <ReactFlow
             nodes={nodes}
             edges={edges}
@@ -74,22 +74,21 @@ const Preview = ({ mapId, steps }) => {
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}
             fitView
-            // colorMode={['dark', 'luxury', ''].includes(contextTheme.theme) ? 'dark' : 'light'}
-            colorMode='light'
+            colorMode={
+              ["dark", "luxury", ""].includes(contextTheme.theme)
+                ? "dark"
+                : "light"
+            }
+            // colorMode='light'
             nodeTypes={nodeTypes}
-            defaultEdgeOptions={{ type: 'smoothstep' }}
+            defaultEdgeOptions={{ type: "smoothstep" }}
             nodesDraggable={false}
             nodesConnectable={false}
           >
-
             <Panel position="top-left" className="flex gap-2">
-              <Link
-                href={'/maps'}
-                className='btn bg-error text-error-content'
-              >
+              <Link href={"/maps"} className="btn bg-error text-error-content">
                 Back
               </Link>
-
             </Panel>
             <Controls />
             <MiniMap />

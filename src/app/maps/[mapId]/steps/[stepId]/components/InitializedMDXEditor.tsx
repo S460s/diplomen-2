@@ -1,8 +1,8 @@
-'use client';
+"use client";
 // https://mdxeditor.dev/editor/docs/customizing-toolbar
 // InitializedMDXEditor.tsx
-import { useContext, type ForwardedRef } from 'react';
-import '@mdxeditor/editor/style.css';
+import { useContext, type ForwardedRef } from "react";
+import "@mdxeditor/editor/style.css";
 import {
   headingsPlugin,
   listsPlugin,
@@ -19,7 +19,7 @@ import {
   linkDialogPlugin,
   CreateLink,
   BlockTypeSelect,
-} from '@mdxeditor/editor';
+} from "@mdxeditor/editor";
 
 // Only import this to the next file
 export default function InitializedMDXEditor({
@@ -28,7 +28,7 @@ export default function InitializedMDXEditor({
 }: { editorRef: ForwardedRef<MDXEditorMethods> | null } & MDXEditorProps) {
   return (
     <MDXEditor
-      className="prose flex-1"
+      className="bg-base-100 text-base-content border border-primary rounded-lg p-4 prose flex"
       onChange={(e) => {
         // TODO: save doesn't work when input in focus
       }}
