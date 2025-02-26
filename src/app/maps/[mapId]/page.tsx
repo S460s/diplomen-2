@@ -19,7 +19,9 @@ export default async function Page({
   const map = await prisma.map.findFirst({ where: { id } });
   if (!map) notFound();
 
-  const allSteps = await prisma.step.count({ where: { mapId: map.id } });
+  const allSteps = await prisma.step.count({
+    where: { mapId: map.id },
+  });
   const completedSteps = await prisma.stepCompleted.count({
     where: { mapId: map.id, ownerId: user?.id, isCompleted: true },
   });

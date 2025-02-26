@@ -29,7 +29,7 @@ export default async function StepPage({
       console.log("NODE: ", n);
       const isCompleted = !!stepProgressMap.find(
         (s: any) => s.stepId === n.data.id
-      ).isCompleted;
+      )?.isCompleted;
       n.data.isCompleted = isCompleted;
     });
   }
