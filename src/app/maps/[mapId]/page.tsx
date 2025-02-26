@@ -57,6 +57,7 @@ export default async function Page({
         <div className="flex justify-center items-center">
           <div
             className="radial-progress bg-primary/10 text-primary border-4 border-transparent text-sm"
+            // @ts-ignore
             style={{ "--value": progress }}
             role="progressbar"
             aria-label="Primary Radial Progressbar"
