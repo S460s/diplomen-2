@@ -21,10 +21,14 @@ export default async function Page({
 
   const allSteps = await prisma.step.count({ where: { mapId: map.id } });
   const completedSteps = await prisma.stepCompleted.count({
-    where: { mapId: map.id, ownerId: user?.id },
+    where: { mapId: map.id, ownerId: user?.id, isCompleted: true },
   });
 
-  const progress = ((completedSteps / allSteps) * 100).toFixed(2);
+  console.log(allSteps, completedSteps);
+
+  let progress = "0";
+  if (allSteps === 0) progress = "100.00";
+  else progress = ((completedSteps / allSteps) * 100).toFixed(2);
 
   return (
     <div className="flex justify-center items-center h-[100%]">
@@ -52,7 +56,7 @@ export default async function Page({
         </div>
         <div className="flex justify-center items-center">
           <div
-            className="radial-progress bg-primary/10 text-primary border-4 border-transparent"
+            className="radial-progress bg-primary/10 text-primary border-4 border-transparent text-sm"
             style={{ "--value": progress }}
             role="progressbar"
             aria-label="Primary Radial Progressbar"

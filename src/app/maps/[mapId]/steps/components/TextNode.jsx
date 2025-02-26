@@ -2,14 +2,13 @@ import React, { memo } from "react";
 import { Handle, Position } from "@xyflow/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import clsx from "clsx";
 
 const InputNode = ({ data, isConnectable }) => {
   const { label } = data;
   console.log(data);
   const upper = label === "output node" || label === "default node";
   const lower = label === "input node" || label === "default node";
-
-  console.log("step: ", data);
 
   const path = usePathname();
   console.log(path.split("/"));
@@ -26,7 +25,12 @@ const InputNode = ({ data, isConnectable }) => {
         />
       )}
 
-      <div className="input-group flex justify-center items-center w-48 p-2 ">
+      <div
+        className={clsx(
+          "input-group flex justify-center items-center w-48 p-2 gap-2",
+          data.isCompleted && "bg-primary text-primary-content"
+        )}
+      >
         <Link
           href={{
             pathname: `/maps/${mapId}/preview/${data.id}`,
@@ -36,6 +40,9 @@ const InputNode = ({ data, isConnectable }) => {
         >
           {data.value}
         </Link>
+        {data.isCompleted && (
+          <span className="icon-[mdi--check-bold] size-4"></span>
+        )}
       </div>
 
       {lower && (

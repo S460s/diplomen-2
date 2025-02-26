@@ -14,7 +14,7 @@ export default async function StepPage({
     where: { mapId: Number(p.mapId) },
   });
 
-  let stepProgressMap: any;
+  let stepProgressMap: any = [];
   try {
     stepProgressMap = await prisma.stepCompleted.findMany({
       where: { mapId: +p.mapId, ownerId: user?.id },
@@ -23,7 +23,18 @@ export default async function StepPage({
     console.log("err");
   }
 
-  console.log(stepProgressMap);
+  //console.log("STEPS: \n\n\n", steps);
+  if (steps?.data) {
+    ((steps?.data as any).nodes as any[]).forEach((n) => {
+      console.log("NODE: ", n);
+      const isCompleted = !!stepProgressMap.find(
+        (s: any) => s.stepId === n.data.id
+      ).isCompleted;
+      n.data.isCompleted = isCompleted;
+    });
+  }
+  // console.log(stepProgressMap);
+  console.log(steps);
 
   return <PreviewMap mapId={p.mapId} steps={steps} />;
 }

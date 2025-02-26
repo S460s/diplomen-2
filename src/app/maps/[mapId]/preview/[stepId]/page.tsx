@@ -15,9 +15,11 @@ export default async function Page({
   let isCompleted;
 
   try {
-    isCompleted = !!(await prisma.stepCompleted.findFirst({
-      where: { stepId: p.stepId, mapId: +p.mapId },
-    }));
+    isCompleted = !!(
+      await prisma.stepCompleted.findFirst({
+        where: { stepId: p.stepId, mapId: +p.mapId },
+      })
+    )?.isCompleted;
   } catch (err) {
     console.log("No progress as of now", err);
     isCompleted = false;
