@@ -5,8 +5,11 @@ import { usePathname } from "next/navigation";
 
 const InputNode = ({ data, isConnectable }) => {
   const { label } = data;
+  console.log(data);
   const upper = label === "output node" || label === "default node";
   const lower = label === "input node" || label === "default node";
+
+  console.log("step: ", data);
 
   const path = usePathname();
   console.log(path.split("/"));
