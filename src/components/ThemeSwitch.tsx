@@ -9,9 +9,9 @@ export default function Page() {
 
   const handleThemeChange = async (e: any) => {
     e.preventDefault();
-    const theme = e.target.dataset.setTheme;
-    theme?.setTheme(theme);
-    await themeAction(theme);
+    const currentTheme = e.target.dataset.setTheme;
+    theme?.setTheme(currentTheme);
+    await themeAction(currentTheme);
   };
 
   return (

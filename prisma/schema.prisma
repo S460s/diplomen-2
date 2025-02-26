@@ -22,8 +22,9 @@ model User {
   theme    String  @default("dark")
   isAdmin  Boolean @default(false)
 
-  Map     Map[]
-  MapLike MapLike[]
+  Map           Map[]
+  MapLike       MapLike[]
+  StepCompleted StepCompleted[]
 }
 
 model Post {
@@ -44,10 +45,11 @@ model Map {
   published   Boolean   @default(false)
   MapLike     MapLike[]
 
-  ownerId Int
-  owner   User     @relation(fields: [ownerId], references: [id])
-  MapData MapData?
-  Step    Step[]
+  ownerId       Int
+  owner         User            @relation(fields: [ownerId], references: [id])
+  MapData       MapData?
+  Step          Step[]
+  StepCompleted StepCompleted[]
 }
 
 model MapLike {
@@ -71,6 +73,21 @@ model Step {
   id   String @id
   text String
 
+  mapId         Int
+  map           Map?           @relation(fields: [mapId], references: [id], onDelete: Cascade)
+  StepCompleted StepCompleted?
+}
+
+model StepCompleted {
+  id          Int     @id @default(autoincrement())
+  isCompleted Boolean @default(false)
+
+  ownerId Int
+  owner   User @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
   mapId Int
   map   Map? @relation(fields: [mapId], references: [id], onDelete: Cascade)
+
+  step   Step?  @relation(fields: [stepId], references: [id], onDelete: Cascade)
+  stepId String @unique
 }

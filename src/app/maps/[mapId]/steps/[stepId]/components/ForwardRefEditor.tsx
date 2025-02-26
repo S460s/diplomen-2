@@ -2,7 +2,7 @@
 // ForwardRefEditor.tsx
 
 import dynamic from "next/dynamic";
-import { forwardRef, useContext } from "react";
+import { forwardRef } from "react";
 
 // This is the only place InitializedMDXEditor is imported directly.
 const Editor = dynamic(() => import("./InitializedMDXEditor"), {

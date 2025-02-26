@@ -79,7 +79,6 @@ const Preview = ({ mapId, steps }) => {
                 ? "dark"
                 : "light"
             }
-            // colorMode='light'
             nodeTypes={nodeTypes}
             defaultEdgeOptions={{ type: "smoothstep" }}
             nodesDraggable={false}
