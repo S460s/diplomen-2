@@ -1,19 +1,30 @@
+import { getUser } from "@/lib/dal";
 import prisma from "@/lib/prisma";
 import { shortFormatter } from "@/util";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 export default async function Page({
   params,
 }: {
   params: Promise<{ mapId: string }>;
 }) {
+  const user = await getUser();
+  if (!user) redirect("/login");
+
   const p = await params;
   const id = Number(p.mapId);
   if (!id) notFound();
 
   const map = await prisma.map.findFirst({ where: { id } });
   if (!map) notFound();
+
+  const allSteps = await prisma.step.count({ where: { mapId: map.id } });
+  const completedSteps = await prisma.stepCompleted.count({
+    where: { mapId: map.id, ownerId: user?.id },
+  });
+
+  const progress = ((completedSteps / allSteps) * 100).toFixed(2);
 
   return (
     <div className="flex justify-center items-center h-[100%]">
@@ -38,6 +49,16 @@ export default async function Page({
           <Link className="btn btn-accent" href={`/maps`}>
             Back
           </Link>
+        </div>
+        <div className="flex justify-center items-center">
+          <div
+            className="radial-progress bg-primary/10 text-primary border-4 border-transparent"
+            style={{ "--value": progress }}
+            role="progressbar"
+            aria-label="Primary Radial Progressbar"
+          >
+            {progress}%
+          </div>
         </div>
       </div>
     </div>

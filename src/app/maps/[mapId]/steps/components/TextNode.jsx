@@ -45,38 +45,6 @@ const InputNode = ({ data, isConnectable }) => {
       )}
     </div>
   );
-
-  return (
-    <>
-      {upper && (
-        <Handle
-          type="target"
-          position={Position.Top}
-          onConnect={(params) => console.log("handle onConnect", params)}
-          isConnectable={isConnectable}
-        />
-      )}
-
-      <Link
-        href={{
-          pathname: `/maps/${mapId}/preview/${data.id}`,
-          query: { title: data.value },
-        }}
-        id={`input_${data.id}`}
-      >
-        {data.value}
-      </Link>
-
-      {lower && (
-        <Handle
-          type="source"
-          position={Position.Bottom}
-          id="a"
-          isConnectable={isConnectable}
-        />
-      )}
-    </>
-  );
 };
 const InputNodeMemo = memo(InputNode);
 export default InputNodeMemo;

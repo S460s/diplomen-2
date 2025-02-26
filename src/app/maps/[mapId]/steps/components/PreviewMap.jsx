@@ -85,7 +85,10 @@ const Preview = ({ mapId, steps }) => {
             nodesConnectable={false}
           >
             <Panel position="top-left" className="flex gap-2">
-              <Link href={"/maps"} className="btn bg-error text-error-content">
+              <Link
+                href={`/maps/${mapId}`}
+                className="btn bg-error text-error-content"
+              >
                 Back
               </Link>
             </Panel>
