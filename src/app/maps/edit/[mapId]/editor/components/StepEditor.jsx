@@ -171,10 +171,14 @@ const Editor = ({ mapId, steps }) => {
     await onDBSave();
   }, 1500);
 
+  const { innerWidth: width } = window;
+  console.log(width);
   useEffect(() => {
     // this seems to work
-    debouncedSave();
-  }, [nodes, edges]);
+    if (width >= 1024) {
+      debouncedSave();
+    }
+  }, [nodes, edges, width]);
 
   // const contextTheme = useContext(ThemeContext)// later for theme
 
@@ -294,7 +298,7 @@ const Editor = ({ mapId, steps }) => {
 
   return (
     <div id="app" className="w-screen h-full flex flex-col md:flex-row">
-      <div className="flex-grow hidden md:block">
+      <div className="flex-grow hidden lg:block">
         <div style={{ width: "100vw", height: "100%" }} ref={reactFlowWrapper}>
           <ReactFlow
             ref={menuRef}
@@ -388,7 +392,7 @@ const Editor = ({ mapId, steps }) => {
           </ReactFlow>
         </div>
       </div>
-      <div className="flex justify-center items-center h-full flex-col">
+      <div className="flex justify-center items-center h-full flex-col w-full">
         <h1 className="text-base-content text-4xl">Sorry..</h1>
         <p className="text-base-content/80 text-base">
           You need a wider device to access the editor.
