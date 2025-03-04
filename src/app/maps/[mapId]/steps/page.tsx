@@ -23,7 +23,6 @@ export default async function StepPage({
     console.log("err");
   }
 
-  //console.log("STEPS: \n\n\n", steps);
   if (steps?.data) {
     ((steps?.data as any).nodes as any[]).forEach((n) => {
       console.log("NODE: ", n);

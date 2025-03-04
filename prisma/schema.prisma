@@ -75,8 +75,9 @@ model Step {
 
   mapId         Int
   map           Map?           @relation(fields: [mapId], references: [id], onDelete: Cascade)
-  StepCompleted StepCompleted?
+  StepCompleted StepCompleted[]
 }
+
 
 model StepCompleted {
   id          Int     @id @default(autoincrement())
@@ -89,5 +90,7 @@ model StepCompleted {
   map   Map? @relation(fields: [mapId], references: [id], onDelete: Cascade)
 
   step   Step?  @relation(fields: [stepId], references: [id], onDelete: Cascade)
-  stepId String @unique
+  stepId String
+
+  @@unique([ownerId, stepId])
 }

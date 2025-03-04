@@ -2,6 +2,8 @@ import prisma from "@/lib/prisma";
 import Link from "next/link";
 import Markdown from "react-markdown";
 import { ProgressToggle } from "./components/ProgressToggle";
+import { getUser } from "@/lib/dal";
+import { redirect } from "next/navigation";
 
 export default async function Page({
   params,
@@ -14,10 +16,13 @@ export default async function Page({
   const step = await prisma.step.findFirst({ where: { id: p.stepId } });
   let isCompleted;
 
+  const owner = await getUser();
+  if (!owner) redirect("/login");
+
   try {
     isCompleted = !!(
       await prisma.stepCompleted.findFirst({
-        where: { stepId: p.stepId, mapId: +p.mapId },
+        where: { stepId: p.stepId, mapId: +p.mapId, ownerId: owner.id },
       })
     )?.isCompleted;
   } catch (err) {

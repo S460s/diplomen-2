@@ -14,7 +14,12 @@ export async function toggleCompleted(
     if (!owner) redirect("/login");
 
     const progress = await prisma.stepCompleted.upsert({
-      where: { stepId },
+      where: {
+        ownerId_stepId: {
+          ownerId: owner.id,
+          stepId,
+        },
+      },
       create: { isCompleted, stepId, ownerId: owner.id, mapId },
       update: { isCompleted },
     });
@@ -24,7 +29,7 @@ export async function toggleCompleted(
         progress.isCompleted ? "completed" : "not completed"
       }`
     );
-  } catch (err) {
-    console.log("[ERROR] cannot create/update progress ", err);
+  } catch (err: any) {
+    console.log("[ERROR] cannot create/update progress ", err.message);
   }
 }
