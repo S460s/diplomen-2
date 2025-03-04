@@ -7,7 +7,6 @@ import clsx from "clsx";
 
 export default function Page() {
   const [state, action, pending] = useActionState(login, null);
-  console.log(state);
 
   return (
     <div className="flex justify-center items-center h-[100%]">

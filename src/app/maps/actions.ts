@@ -11,7 +11,6 @@ export async function likeMap(mapId: number) {
     const like = await prisma.mapLike.create({
       data: { mapId, ownerId: user.id },
     });
-    console.log("Like: ", like);
   } catch (err) {
     console.log("[ERROR] couldnt create map like", err);
   }
@@ -23,7 +22,6 @@ export async function unlikeMap(mapId: number) {
 
   try {
     const like = await prisma.mapLike.deleteMany({ where: { mapId } });
-    console.log("Like deleted: ", like);
   } catch (err) {
     console.log("[ERROR] couldnt create map like", err);
   }

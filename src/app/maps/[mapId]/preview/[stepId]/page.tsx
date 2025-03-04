@@ -28,18 +28,14 @@ export default async function Page({
       })
     )?.isCompleted;
   } catch (err) {
-    console.log("No progress as of now", err);
     isCompleted = false;
   }
 
-  console.log(p);
   const s = await prisma.stepCompleted.findFirst({
     where: {
       ownerId: owner.id,
     },
   });
-
-  console.log("STEP IS HERE", s);
 
   return (
     <div className="flex justify-center items-center h-full">

@@ -27,10 +27,6 @@ export default async function Page({
     where: { mapId: map.id, ownerId: user?.id, isCompleted: true },
   });
 
-  console.log(allSteps, completedSteps);
-
-  console.log("Completed", allSteps, completedSteps);
-
   let progress = "0";
   if (allSteps === 0) progress = "100.00";
   else progress = ((completedSteps / allSteps) * 100).toFixed(2);

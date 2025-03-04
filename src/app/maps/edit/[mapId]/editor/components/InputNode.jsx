@@ -13,15 +13,12 @@ const InputNode = ({ data, isConnectable }) => {
   const lower = label === "input node" || label === "default node";
   const params = useParams();
 
-  console.log("DATA", data);
-
   return (
     <div className="flex gap-1">
       {upper && (
         <Handle
           type="target"
           position={Position.Top}
-          onConnect={(params) => console.log("handle onConnect", params)}
           isConnectable={isConnectable}
         />
       )}

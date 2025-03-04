@@ -34,7 +34,6 @@ const Preview = ({ mapId, steps }) => {
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
   const contextTheme = useContext(ThemeContext);
-  console.log(mapId);
 
   const onConnect = useCallback(
     (params) =>
@@ -103,7 +102,6 @@ const Preview = ({ mapId, steps }) => {
 };
 
 export function PreviewMap({ mapId, steps }) {
-  console.log(steps);
   return (
     <ReactFlowProvider>
       <Preview mapId={mapId} steps={steps} />

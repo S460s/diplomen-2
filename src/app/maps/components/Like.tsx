@@ -23,8 +23,6 @@ export function Like({
     await unlikeMap(mapId);
   };
 
-  console.log(data, mapId);
-
   return liked ? (
     <button onClick={dislike} className="btn">
       {likes}

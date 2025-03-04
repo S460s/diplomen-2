@@ -23,7 +23,6 @@ export default function Editor({
   markdown: string;
 }) {
   const ref = useRef<MDXEditorMethods>(null);
-  console.log(ref.current?.getMarkdown());
 
   let notyf = null;
 

@@ -6,12 +6,10 @@ import clsx from "clsx";
 
 const InputNode = ({ data, isConnectable }) => {
   const { label } = data;
-  console.log(data);
   const upper = label === "output node" || label === "default node";
   const lower = label === "input node" || label === "default node";
 
   const path = usePathname();
-  console.log(path.split("/"));
   const mapId = path.split("/")[2];
 
   return (
@@ -20,7 +18,6 @@ const InputNode = ({ data, isConnectable }) => {
         <Handle
           type="target"
           position={Position.Top}
-          onConnect={(params) => console.log("handle onConnect", params)}
           isConnectable={isConnectable}
         />
       )}

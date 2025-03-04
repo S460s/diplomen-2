@@ -9,11 +9,9 @@ export default async function Page({
 }) {
   const p = await params;
   const id = Number(p.mapId);
-  console.log(id);
   if (!id) notFound();
 
   const map = await prisma.map.findFirst({ where: { id } });
-  console.log(map);
   if (!map) notFound();
 
   return <EditForm map={map} />;

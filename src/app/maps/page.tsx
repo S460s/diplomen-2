@@ -44,8 +44,6 @@ export default async function Page({
     orderBy: { updatedAt: "asc" },
   });
 
-  console.log(maps);
-
   return (
     <div className="flex justify-center items-center gap-4">
       <div className="w-[100%] flex justify-center flex-col items-center">

@@ -94,14 +94,12 @@ const Editor = ({ mapId, steps }) => {
   } catch (err) {
     console.log("[ERROR] cannot render notyf");
   }
-  console.log(notyf);
 
   const flowkey = `steps${mapId}`;
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const { screenToFlowPosition, fitView } = useReactFlow();
-  console.log(mapId);
 
   const onConnect = useCallback(
     (params) =>
