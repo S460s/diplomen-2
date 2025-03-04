@@ -70,15 +70,7 @@ const getLayoutedElements = (nodes, edges) => {
   return { nodes: newNodes, edges };
 };
 
-const initialId = nanoid();
-const initialNodes = [
-  {
-    id: initialId,
-    type: "inputType",
-    data: { label: "input node", id: initialId, value: "" },
-    position: { x: 0, y: 0 },
-  },
-];
+const initialNodes = [];
 const initialEdges = [];
 
 // custom elements
@@ -399,8 +391,8 @@ const Editor = ({ mapId, steps }) => {
         </div>
       </div>
       <div className="flex justify-center items-center h-full flex-col">
-        <h1 class="text-base-content text-4xl">Sorry..</h1>
-        <p class="text-base-content/80 text-base">
+        <h1 className="text-base-content text-4xl">Sorry..</h1>
+        <p className="text-base-content/80 text-base">
           You need a wider device to access the editor.
         </p>
       </div>

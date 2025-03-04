@@ -1,3 +1,5 @@
+"use server";
+
 import prisma from "@/lib/prisma";
 import Link from "next/link";
 import Markdown from "react-markdown";
@@ -29,6 +31,15 @@ export default async function Page({
     console.log("No progress as of now", err);
     isCompleted = false;
   }
+
+  console.log(p);
+  const s = await prisma.stepCompleted.findFirst({
+    where: {
+      ownerId: owner.id,
+    },
+  });
+
+  console.log("STEP IS HERE", s);
 
   return (
     <div className="flex justify-center items-center h-full">
