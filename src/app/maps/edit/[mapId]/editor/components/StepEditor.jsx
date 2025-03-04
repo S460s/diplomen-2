@@ -304,7 +304,7 @@ const Editor = ({ mapId, steps }) => {
 
   return (
     <div id="app" className="w-screen h-full flex flex-col md:flex-row">
-      <div className="flex-grow">
+      <div className="flex-grow hidden md:block">
         <div style={{ width: "100vw", height: "100%" }} ref={reactFlowWrapper}>
           <ReactFlow
             ref={menuRef}
@@ -397,6 +397,12 @@ const Editor = ({ mapId, steps }) => {
             </Panel>
           </ReactFlow>
         </div>
+      </div>
+      <div className="flex justify-center items-center h-full flex-col">
+        <h1 class="text-base-content text-4xl">Sorry..</h1>
+        <p class="text-base-content/80 text-base">
+          You need a wider device to access the editor.
+        </p>
       </div>
     </div>
   );

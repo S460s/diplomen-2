@@ -95,7 +95,7 @@ export function EditForm({ map }: { map: Prisma.MapGetPayload<{}> }) {
                 </label>
               </div>
 
-              <div className="mt-4 flex gap-2">
+              <div className="mt-4 flex gap-2 flex-wrap">
                 <button
                   type="submit"
                   name="submitButton"
