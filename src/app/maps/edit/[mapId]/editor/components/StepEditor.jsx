@@ -92,6 +92,7 @@ import { notyfContext } from "../../components/Notyf";
 import { ThemeContext } from "@/components/ThemeContext";
 import { useDebouncedCallback } from "use-debounce";
 import Link from "next/link";
+import { saveStep } from "@/app/maps/[mapId]/steps/[stepId]/actions";
 
 const Editor = ({ mapId, steps }) => {
   let notyf = null;
@@ -247,7 +248,7 @@ const Editor = ({ mapId, steps }) => {
   };
 
   const onDrop = useCallback(
-    (event) => {
+    async (event) => {
       event.preventDefault();
 
       if (!type) {
@@ -266,6 +267,7 @@ const Editor = ({ mapId, steps }) => {
         data: { label: `${type} node`, id },
       };
 
+      await saveStep(mapId, newNode.id, "");
       setNodes((nds) => [...nds, newNode]);
     },
     [screenToFlowPosition, type]

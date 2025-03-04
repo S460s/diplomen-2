@@ -55,7 +55,10 @@ export default async function Page({
           <Link className="btn btn-primary" href={`/maps/${map.id}/steps`}>
             View Steps
           </Link>
-          <Link className="btn btn-accent" href={`/maps`}>
+          <Link
+            className="btn btn-accent"
+            href={map.ownerId === user.id ? `/maps/edit/${map.id}` : `/maps`}
+          >
             Back
           </Link>
         </div>
