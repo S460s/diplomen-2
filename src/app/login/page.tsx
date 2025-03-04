@@ -4,13 +4,14 @@ import { useActionState } from "react";
 import { login } from "@/app/login/actions";
 
 import clsx from "clsx";
+import Link from "next/link";
 
 export default function Page() {
   const [state, action, pending] = useActionState(login, null);
 
   return (
     <div className="flex justify-center items-center h-[100%]">
-      <div className="flex justify-center align-center w-1/2">
+      <div className="flex justify-center align-center md:w-1/2">
         <div className="bg-base-100 w-full rounded-lg shadow">
           <h5 className="bg-base-300 rounded-t-lg p-4 text-xl font-bold">
             Login
@@ -79,6 +80,9 @@ export default function Page() {
                   </span>
                 </div>
               </div>
+              <p>
+                No account? Go to <Link href={"/signup"}> Sign up.</Link>
+              </p>
 
               <div className="mt-4">
                 <button

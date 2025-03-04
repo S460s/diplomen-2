@@ -11,7 +11,7 @@ export default function Page() {
   return (
     <>
       <div className="flex justify-center items-center h-[100%]">
-        <div className="flex justify-center align-center w-1/2">
+        <div className="flex justify-center align-center md:w-1/2">
           <div className="bg-base-100 w-full rounded-lg shadow">
             <h5 className="bg-base-300 rounded-t-lg p-4 text-xl font-bold">
               Sign up
