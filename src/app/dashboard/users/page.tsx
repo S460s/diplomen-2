@@ -20,6 +20,10 @@ export default async function Page() {
             </ul>
           ))}
         </ul>
+
+        <Link className="btn" href={"/dashboard"}>
+          Back
+        </Link>
       </div>
     </div>
   );

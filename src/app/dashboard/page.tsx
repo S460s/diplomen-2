@@ -8,11 +8,11 @@ export default async function Page() {
 
         <ul className="list-inside list-disc">
           <li className="mb-2">
-            <Link href={"/dashboard/users"}>Manage maps</Link>
+            <Link href={"/dashboard/users"}>Manage users</Link>
           </li>
 
           <li className="mb-2">
-            <Link href={"/dashboard/maps"}>Manage users</Link>
+            <Link href={"/dashboard/maps"}>Manage maps</Link>
           </li>
         </ul>
       </div>

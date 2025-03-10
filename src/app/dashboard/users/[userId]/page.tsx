@@ -21,11 +21,12 @@ export default async function Page({
   }
 
   return (
-    <div>
-      <h1>Current user: {currentUser.name}</h1>
+    <div className="flex justify-center items-center h-full">
+      <div className="card md:w-1/2 p-12">
+        <h1>Selected user: {currentUser.name}</h1>
 
-      <br />
-      <UserForm user={currentUser} id={id} />
+        <UserForm user={currentUser} id={id} />
+      </div>
     </div>
   );
 }
