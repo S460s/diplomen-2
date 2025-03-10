@@ -31,29 +31,16 @@ export default function MapList({
                   </div>
                   <p className="mb-4 line-clamp-2">{map.description}</p>
                   <div className="card-actions">
-                    {map.ownerId === user.id ? (
-                      <Link className="btn" href={`/maps/edit/${map.id}`}>
-                        Edit
-                      </Link>
-                    ) : (
-                      <Link href={`/maps/${map.id}`} className="btn">
-                        View
-                      </Link>
-                    )}
-                    <Like
-                      data={{
-                        liked: !!(map as unknown as any).MapLike.length,
-                        likes: (map as unknown as any)._count.MapLike,
-                      }}
-                      mapId={map.id}
-                    />
+                    <Link className="btn" href={`/maps/edit/${map.id}`}>
+                      Edit
+                    </Link>
                   </div>
                 </div>
               </div>
             );
           })
         ) : (
-          <p>No maps as of now</p>
+          <p>There are no maps..</p>
         )}
       </div>
     </div>
