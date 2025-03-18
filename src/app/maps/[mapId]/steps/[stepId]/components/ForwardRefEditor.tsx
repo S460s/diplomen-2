@@ -24,7 +24,7 @@ export const ForwardRefEditor = forwardRef<
   MDXEditorPropsDark
 >((props, ref) => (
   <Editor
-    className={clsx(props.isDark && "dark-theme dark-editor")}
+    className={clsx(props.isDark && "dark-theme dark-editor w-full")}
     {...props}
     editorRef={ref}
   />

@@ -18,22 +18,12 @@ model User {
   email    String  @unique
   password String
   name     String?
-  posts    Post[]
   theme    String  @default("dark")
   isAdmin  Boolean @default(false)
 
   Map           Map[]
   MapLike       MapLike[]
   StepCompleted StepCompleted[]
-}
-
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  authorId  Int
-  author    User    @relation(fields: [authorId], references: [id])
 }
 
 model Map {

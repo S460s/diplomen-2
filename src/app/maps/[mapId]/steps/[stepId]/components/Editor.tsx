@@ -43,7 +43,7 @@ export default function Editor({
 
   return (
     <div className="flex justify-center items-center w-full">
-      <div className="m-2 p-2 card">
+      <div className="m-2 p-2 card w-full">
         <div className="flex justify-center">
           <ForwardRefEditor
             isDark={isDark}
