@@ -1,6 +1,8 @@
 // components/RoutesVisualizer.tsx
 "use client";
 import { useState, useEffect } from "react";
+import { Handle, Position } from "@xyflow/react";
+
 import {
   ReactFlow,
   ReactFlowProvider,
@@ -18,14 +20,42 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import dagre from "@dagrejs/dagre";
+import Link from "next/link";
 
 const nodeWidth = 194;
 const nodeHeight = 24;
 
+function RouteNode({ data, id }) {
+  console.log("RAN");
+  return (
+    <div className="rounded bg-white px-3 py-1 border shadow hover:bg-blue-100 transition">
+      <Handle
+        type="target"
+        position={Position.Top}
+        style={{ background: "#555" }}
+      />
+      <Link
+        href={id.split("/app")[1]}
+        className="text-blue-600 hover:underline"
+      >
+        {data.label}
+      </Link>
+      <Handle
+        type="source"
+        position={Position.Bottom}
+        style={{ background: "#555" }}
+      />
+    </div>
+  );
+}
+
+const nodeTypes = {
+  linkNode: RouteNode,
+};
+
 function getLayoutedElements(nodes, edges) {
   const dagreGraph = new dagre.graphlib.Graph();
   dagreGraph.setDefaultEdgeLabel(() => ({}));
-  // Set graph direction "TB" means top-to-bottom.
   dagreGraph.setGraph({ rankdir: "TB" });
 
   nodes.forEach((node) => {
@@ -44,7 +74,7 @@ function getLayoutedElements(nodes, edges) {
       ...node,
       targetPosition: "top",
       sourcePosition: "bottom",
-      // Shift position from center anchor to top-left anchor.
+      // Shift from center anchor to top-left anchor.
       position: {
         x: nodeWithPosition.x - nodeWidth / 2,
         y: nodeWithPosition.y - nodeHeight / 2,
@@ -62,12 +92,18 @@ export default function RoutesVisualizer({
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
 
-  // Compute layout using dagre once on mount.
+  console.log(initialNodes);
   useEffect(() => {
+    const withCustomType = initialNodes.map((node) => ({
+      ...node,
+      type: node.id.includes("[") ? "default" : "linkNode",
+    }));
+
     const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
-      initialNodes,
+      withCustomType,
       initialEdges
     );
+
     setNodes(layoutedNodes);
     setEdges(layoutedEdges);
   }, [initialNodes, initialEdges]);
@@ -76,12 +112,10 @@ export default function RoutesVisualizer({
     <div className="h-screen w-full bg-gray-50">
       <header className="p-4 bg-white shadow-md">
         <h1 className="text-xl font-semibold">Next.js App Routes Visualizer</h1>
-        <p className="text-sm text-gray-600">
-          Only page.tsx/page.jsx files are included. Nodes ordered using dagre.
-        </p>
+        <p className="text-sm text-gray-600">Flow of the application.</p>
       </header>
       <div className="h-[calc(100vh-100px)]">
-        <ReactFlow nodes={nodes} edges={edges} fitView>
+        <ReactFlow nodeTypes={nodeTypes} nodes={nodes} edges={edges} fitView>
           <Controls />
         </ReactFlow>
       </div>
