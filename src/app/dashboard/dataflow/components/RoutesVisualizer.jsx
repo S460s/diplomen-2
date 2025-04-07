@@ -96,7 +96,10 @@ export default function RoutesVisualizer({
   useEffect(() => {
     const withCustomType = initialNodes.map((node) => ({
       ...node,
-      type: node.id.includes("[") ? "default" : "linkNode",
+      type:
+        node.id.includes("[") || node.id.includes("edit")
+          ? "default"
+          : "linkNode",
     }));
 
     const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
