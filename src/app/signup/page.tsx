@@ -1,10 +1,10 @@
 "use client";
 
 import { useActionState } from "react";
-import { signUp } from "@/app/signup/actions";
 import Form from "next/form";
 import clsx from "clsx";
 
+import { signUp } from "@/app/signup/actions";
 export default function Page() {
   const [state, action, pending] = useActionState(signUp, null);
 
@@ -15,6 +15,7 @@ export default function Page() {
           <div className="bg-base-100 w-full rounded-lg shadow">
             <h5 className="bg-base-300 rounded-t-lg p-4 text-xl font-bold">
               Sign up
+              ...
             </h5>
             <div className="w-full p-4">
               <Form

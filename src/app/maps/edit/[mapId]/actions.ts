@@ -34,24 +34,16 @@ export async function editMap(
     description: formData.get("description") as string,
     published: formData.get("published") || "",
   };
-
   const validatedInput = mapSchema.safeParse(inputData);
-
   if (!validatedInput.success) {
-    return {
-      errors: validatedInput.error.flatten().fieldErrors,
-      inputData,
-    };
+    return { errors: validatedInput.error.flatten().fieldErrors, inputData };
   }
-
   const { title, description, published } = validatedInput.data;
   const user = await getUser();
-
   if (!user) {
     console.log("[DEBUG] No user found to create map.");
     return redirect("/login");
   }
-
   try {
     const map = await prisma.map.update({
       where: {
@@ -69,15 +61,22 @@ export async function editMap(
   } catch (err) {
     console.log("[ERROR] couldn not create map", err);
   }
-
   revalidatePath("/maps");
   redirect("/maps");
 }
 
 export async function deleteMap(id: number) {
-  // const user = await getUser() // add checks if the user who tries to delete the map is the actual owner
   try {
-    const map = await prisma.map.delete({ where: { id } });
+    const owner = await getUser();
+    const map = await prisma.map.findFirst({
+      where: { id, ownerId: owner?.id },
+    });
+
+    if (!map) {
+      console.log("[ERROR] cannot delete map.");
+      return;
+    }
+    await prisma.map.delete({ where: { id } });
     console.log("[LOG] deleted map with id", map.id);
   } catch (err) {
     console.log("[ERROR] cannot delete map.", err);

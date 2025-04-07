@@ -14,6 +14,9 @@ export default async function Page() {
           <li className="mb-2">
             <Link href={"/dashboard/maps"}>Manage maps</Link>
           </li>
+          <li className="mb-2">
+            <Link href={"/dashboard/dataflow"}>Dataflow of application</Link>
+          </li>
         </ul>
       </div>
     </div>
