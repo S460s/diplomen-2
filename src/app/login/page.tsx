@@ -58,7 +58,7 @@ export default function Page() {
                   <div className="relative">
                     <input
                       defaultValue={state?.inputData.password}
-                      type="text"
+                      type="password"
                       placeholder="not qwerty pls"
                       className={clsx(
                         "input",

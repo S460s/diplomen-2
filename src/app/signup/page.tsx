@@ -14,8 +14,7 @@ export default function Page() {
         <div className="flex justify-center align-center md:w-1/2">
           <div className="bg-base-100 w-full rounded-lg shadow">
             <h5 className="bg-base-300 rounded-t-lg p-4 text-xl font-bold">
-              Sign up
-              ...
+              Sign up ...
             </h5>
             <div className="w-full p-4">
               <Form
@@ -86,7 +85,7 @@ export default function Page() {
                     <div className="relative">
                       <input
                         defaultValue={state?.inputData.password}
-                        type="text"
+                        type="password"
                         placeholder="not qwerty pls"
                         className={clsx(
                           "input",

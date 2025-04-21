@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import RoutesVisualizer from "./components/RoutesVisualizer";
-
+import { cwd } from "process";
 /**
  * Recursively reads a directory and builds a tree of route objects.
  * Only files named "page" with a .tsx or .jsx extension are considered routes.
@@ -102,7 +102,7 @@ function flattenRoutes(
 
 export default async function VisualizerPage() {
   // Use the "app" directory as the source for route extraction.
-  const appDir = path.join(process.cwd(), "./src/");
+  const appDir = path.join(process.cwd(), `./src`);
   const routesTree = getRoutesTree(appDir);
 
   // Ensure the root "/" is at the beginning:
@@ -110,7 +110,7 @@ export default async function VisualizerPage() {
 
   const { nodes, edges } = flattenRoutes(sortedTree);
 
-  console.log(edges);
+  console.log(cwd());
 
   return (
     <div>
